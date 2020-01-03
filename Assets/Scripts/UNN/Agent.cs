@@ -12,6 +12,14 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] protected float[] outputs = null;          //outputs calculated by agent neural network
     [SerializeField] private bool initilized = false;           //flag to know if the agent have been activated
 
+    [ContextMenu("Save Neural Network")]
+    public void SaveNeuralNetwork()
+    {
+        //ToDo: this only serialize layers and fitness, needs something to serialize weigths etc
+        string jsonString = JsonManager.SerializeToJson<NeuralNetwork>(this.net);
+        Debug.Log(jsonString);
+    }
+
     /// <summary>
     /// Initialize Agent behaviour
     /// </summary>

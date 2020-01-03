@@ -8,15 +8,22 @@ public abstract class AgentsManager : MonoBehaviour
 {
     [SerializeField] protected GameObject agentPrefab;
     [Space()]
-    [SerializeField] protected float newGenerationRateTime = 15f;//Time to wait until make a new generation
+    [SerializeField][Range(0f, 20f)]
+    protected float newTimeScale = 10f;//Increase Scale time speed all processes, increase it to train faster the agents
+    public float NewTimeScale
+    {
+        get { return newTimeScale; }
+        set { newTimeScale = value; Time.timeScale = newTimeScale; }
+    }
+    [SerializeField] protected float newGenerationRateTime = 15f;   //Time to wait until make a new generation
+    [Space()]
     [Tooltip("Is recommended to have an even number of agents")]
-    [SerializeField] protected int populationSize = 50;         //...to speed training cause training use the half of the population(population/2)
-    [SerializeField] protected int currentGenerationNumber = 0;
+    [SerializeField] protected int populationSize = 50;             //...to speed training cause training use the half of the population(population/2)
+    [SerializeField][DisplayWithoutEdit] protected int currentGenerationNumber = 0;
     [SerializeField] protected int[] layers = new int[] { 1, 10, 10, 1 }; //1 input and 1 output
     [Space()]
     [SerializeField] protected List<NeuralNetwork> agentsNets;
-    [SerializeField] protected List<Agent> agentsList = null;
-
+    [SerializeField] protected List<Agent> agentsList = null;        
     protected GameObject agentsParentGO; //Used as agents parent on Unity's hierarchy
 
     /// <summary>
@@ -26,6 +33,14 @@ public abstract class AgentsManager : MonoBehaviour
     {
         CreateAgentsParentGO();
         this.InvokeRepeating(TrainAgents, newGenerationRateTime);
+    }
+
+    /// <summary>
+    /// This is needed cause properties aren't called by UnityEditor changes
+    /// </summary>
+    private void OnValidate()
+    {
+        NewTimeScale = NewTimeScale;
     }
 
     /// <summary>
@@ -62,8 +77,7 @@ public abstract class AgentsManager : MonoBehaviour
             }
         }
            
-        currentGenerationNumber++;
-        
+        currentGenerationNumber++;        
         CreateAllAgentsGO();        
     }
     

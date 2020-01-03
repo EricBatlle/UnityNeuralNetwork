@@ -67,7 +67,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
                 }
             }
         }
-    }
+    }    
 
     /// <summary>
     /// Create neuron matrix

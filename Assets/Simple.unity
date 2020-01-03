@@ -257,8 +257,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 337650499092013675, guid: 562e88d6c03511443a50f5d58623a4b1,
     type: 3}
+  newTimeScale: 10
   newGenerationRateTime: 15
-  populationSize: 2
+  populationSize: 4
   currentGenerationNumber: 0
   layers: 010000000a0000000a00000001000000
   agentsNets: []
