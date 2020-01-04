@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System;
-using UnityEngine;
 
 /// <summary>
 /// Neural Network (Genetic, Unsupervised)
@@ -8,10 +7,10 @@ using UnityEngine;
 [Serializable]
 public class NeuralNetwork : IComparable<NeuralNetwork>
 {
-    [SerializeField] private int[] layers;          //layers
-    [SerializeField] private float[][] neurons;     //neuron matix
-    [SerializeField] private float[][][] weights;   //weight matrix
-    [SerializeField] private float fitness;         //fitness of the network
+    [DisplayWithoutEdit]public int[] layers;          //layers
+    public float[][] neurons;     //neuron matix
+    public float[][][] weights;   //weight matrix
+    public float fitness;         //fitness of the network
 
     /// <summary>
     /// Initilizes neural network with random weights

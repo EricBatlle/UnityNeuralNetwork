@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static NeuralNetworkSerializer;
 
 /// <summary>
 /// Component that makes the decision of what action to take given certain inputs
@@ -6,19 +7,11 @@
 public abstract class Agent : MonoBehaviour
 {
     [Header("Agent")]
+    [SerializeField] public bool initilized = false;           //flag to know if the agent have been activated
     [SerializeField] protected NeuralNetwork net;               //neural network associated to the agent
     [SerializeField] protected object[] info = null;            //info passed to the agent to generate inputs
     [SerializeField] protected float[] inputs = new float[1];   //actions that the agent can make
-    [SerializeField] protected float[] outputs = null;          //outputs calculated by agent neural network
-    [SerializeField] private bool initilized = false;           //flag to know if the agent have been activated
-
-    [ContextMenu("Save Neural Network")]
-    public void SaveNeuralNetwork()
-    {
-        //ToDo: this only serialize layers and fitness, needs something to serialize weigths etc
-        string jsonString = JsonManager.SerializeToJson<NeuralNetwork>(this.net);
-        Debug.Log(jsonString);
-    }
+    [SerializeField] protected float[] outputs = null;          //outputs calculated by agent neural network    
 
     /// <summary>
     /// Initialize Agent behaviour
@@ -32,6 +25,7 @@ public abstract class Agent : MonoBehaviour
         this.info = info;
     }
 
+    #region AgentCycle
     /// <summary>
     /// Agent behaviour cycle.
     /// <para>
@@ -79,5 +73,15 @@ public abstract class Agent : MonoBehaviour
     private void AddNeuralNetworkFitness(float fit = 0f)
     {
         this.net.AddFitness(fit);
+    }
+    #endregion
+
+    /// <summary>
+    /// Save agent neural network information into JSON file
+    /// </summary>
+    public void SaveNeuralNetwork()
+    {
+        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(this.net.Serializable());
+        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
     }
 }
