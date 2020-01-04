@@ -7,7 +7,7 @@
 public class SimpleAgent : Agent
 {
     [Header("Simplest")]
-    [SerializeField] private Rigidbody2D rBody = null;
+    [SerializeField] private Rigidbody rBody = null;
     [SerializeField] private Renderer rendererComponent = null;
     private Material mat;
 
