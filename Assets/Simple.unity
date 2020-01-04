@@ -259,7 +259,7 @@ MonoBehaviour:
     type: 3}
   newTimeScale: 10
   newGenerationRateTime: 15
-  populationSize: 4
+  populationSize: 8
   currentGenerationNumber: 0
   layers: 010000000a0000000a00000001000000
   agentsNets: []
