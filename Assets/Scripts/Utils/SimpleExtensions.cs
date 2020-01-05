@@ -12,6 +12,11 @@ public static class SimpleExtensions
     {
         mono.StartCoroutine(ExecuteAfterTime(action, delay));
     }
+    public static void InvokeAndGetCoroutine(this MonoBehaviour mono, Action action, float delay)
+    {
+        Coroutine coroutine = mono.StartCoroutine(ExecuteAfterTime(action, delay));
+        return coroutine;
+    }    
     private static IEnumerator ExecuteAfterTime(Action action, float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -22,7 +27,12 @@ public static class SimpleExtensions
     public static void InvokeRepeating(this MonoBehaviour mono, Action action, float repeatRate = 1, float initialDelay = 0)
     {
         mono.StartCoroutine(ExecuteRepeatedlyAfterTime(action, repeatRate, initialDelay));
-    }    
+    }
+    public static Coroutine InvokeRepeatingAndGetCoroutine(this MonoBehaviour mono, Action action, float repeatRate = 1, float initialDelay = 0)
+    {
+        Coroutine coroutine = mono.StartCoroutine(ExecuteRepeatedlyAfterTime(action, repeatRate, initialDelay));
+        return coroutine;
+    }
     private static IEnumerator ExecuteRepeatedlyAfterTime(Action action, float repeatRate, float initialDelay)
     {
         yield return new WaitForSeconds(initialDelay);
@@ -32,5 +42,5 @@ public static class SimpleExtensions
             action();
             yield return new WaitForSeconds(repeatRate);
         }
-    }
+    }    
 }
