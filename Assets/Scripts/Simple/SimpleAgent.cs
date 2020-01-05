@@ -29,7 +29,7 @@ public class SimpleAgent : Agent
         rewardGO = (GameObject)info[0];
     }
 
-    //Load rewardLocation gameObject from SimpleManager
+    //Load reward gameObject from SimpleManager
     protected override void LoadInfo()
     {
         SimpleManager manager = (SimpleManager)FindObjectOfType(typeof(SimpleManager));

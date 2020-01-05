@@ -28,6 +28,13 @@ public class BoomerangAgent : Agent
         hexagonPointer = (Transform)info[0];
     }
 
+    //Load hexagon gameObject from BoomerangManager
+    protected override void LoadInfo()
+    {
+        BoomerangsManager manager = (BoomerangsManager)FindObjectOfType(typeof(BoomerangsManager));
+        hexagonPointer = manager.hex.transform;
+    }
+
     //Get rotation-direction depending of the position between the agent and the hexagonPointer
     protected override void CollectEnvironmentInformation()
     {

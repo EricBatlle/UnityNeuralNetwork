@@ -7,7 +7,8 @@ using UnityEngine;
 [CustomEditor(typeof(Agent))]
 public class AgentEditor : Editor
 {
-    Agent agent = null;
+    private Agent agent = null;
+
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();

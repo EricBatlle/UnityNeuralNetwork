@@ -120,36 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &86578048
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 86578049}
-  m_Layer: 0
-  m_Name: Academy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &86578049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 86578048}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &514510239
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,14 +163,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d8fbb347542ad4a8f2e69f7cfb8881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trainOnStart: 1
   agentPrefab: {fileID: 1078310815301990, guid: 34dfa889ddd042d4bb996918f6439614,
     type: 3}
+  newTimeScale: 10
   newGenerationRateTime: 15
   populationSize: 5
-  currentGenerationNumber: 0
-  layers: 010000000a0000000a00000001000000
-  agentsNets: []
-  agentsList: []
+  neuralNetworkToLoad: {fileID: 0}
+  createNetxGenerationWithThisNet: 0
+  isTraining: 0
+  isTrainingStoped: 0
   hex: {fileID: 1769949505}
   leftMouseDown: 0
 --- !u!1 &1769949505
