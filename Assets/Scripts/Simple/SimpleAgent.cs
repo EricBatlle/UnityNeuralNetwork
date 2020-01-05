@@ -6,12 +6,12 @@
 /// </summary>
 public class SimpleAgent : Agent
 {
-    [Header("Simplest")]
+    [Header("Simple")]
     [SerializeField] private Rigidbody rBody = null;
     [SerializeField] private Renderer rendererComponent = null;
     private Material mat;
 
-    private GameObject rewardLocation = null;
+    private GameObject rewardGO = null;
     private float direction = 0f;
     private float distanceToReward = 0f;
 
@@ -22,22 +22,24 @@ public class SimpleAgent : Agent
         this.transform.position = new Vector3(0, 0, 0);
     }
 
-    //Pass reward position
+    //Pass reward Game Object
     public override void Init(NeuralNetwork net, params object[] info)
     {
         base.Init(net, info);
-        rewardLocation = (GameObject)info[0];
+        rewardGO = (GameObject)info[0];
     }
 
-    protected override void SetInfo()
+    //Load rewardLocation gameObject from SimpleManager
+    protected override void LoadInfo()
     {
-        rewardLocation = new GameObject();
+        SimpleManager manager = (SimpleManager)FindObjectOfType(typeof(SimpleManager));
+        rewardGO = manager.rewardGO;
     }
 
     //Get direction depending of the distance between the agent and the reward
     protected override void CollectEnvironmentInformation()
     {
-        distanceToReward = transform.position.x - rewardLocation.transform.position.x;
+        distanceToReward = transform.position.x - rewardGO.transform.position.x;
         direction = 1f;
 
         if (distanceToReward < 0)        
