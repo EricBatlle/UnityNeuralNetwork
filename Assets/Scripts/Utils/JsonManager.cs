@@ -40,6 +40,7 @@ public static class JsonManager
     #endregion
 
     #region Write/Read Json files
+    //Write to JSON
     public static void WriteJSONFile(string fileName, string content, string storingPath ="Assets")
     {
         string completePath = storingPath + "/" + fileName+".json";
@@ -60,6 +61,8 @@ public static class JsonManager
         writer.Close();
         Debug.Log(string.Format("Created new JSON file {0} in {1}",fileName,completePath));
     }
+
+    //Read from JSON
     public static string ReadJSONFile(string filePath)
     {
         StreamReader reader = new StreamReader(filePath);
@@ -67,6 +70,10 @@ public static class JsonManager
         reader.Close();
 
         return content;
+    }
+    public static string ReadJSONFile(TextAsset textAsset)
+    {        
+        return textAsset.text;
     }
     #endregion
 }
