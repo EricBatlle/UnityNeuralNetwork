@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using System.Runtime.Serialization;
+using static NeuralNetworkSerializer;
 
 /// <summary>
 /// Neural Network (Genetic, Unsupervised)
@@ -224,6 +225,43 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     public float GetFitness()
     {
         return fitness;
+    }
+    #endregion
+
+    #region Save/Load neural network
+    /// <summary>
+    /// Save Neural Network serialized information to JSON file
+    /// </summary>
+    public void SaveNeuralNetworkToJSON()
+    {
+        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(this.Serialized());
+        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
+    }
+    /// <summary>
+    /// Static saving Neural Network serialized information to JSON file
+    /// </summary>
+    public static void SaveNeuralNetworkToJSON(NeuralNetwork net)
+    {
+        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(net.Serialized());
+        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
+    }
+
+    /// <summary>
+    /// Static load of a serialized NeuralNetwork from TextAsset
+    /// </summary>
+    /// <param name="neuralNetworkTextAsset">TextAsset from which information is read</param>
+    /// <returns></returns>
+    public static NeuralNetwork LoadFromTextAsset(TextAsset neuralNetworkTextAsset)
+    {
+        if (neuralNetworkTextAsset == null)
+            Debug.Log("There is no Neural Network TextAsset attached");
+        else
+        {
+            string jsonString = JsonManager.ReadJSONFile(neuralNetworkTextAsset);
+            SerializableNeuralNetwork sNet = JsonManager.DeserializeFromJson<SerializableNeuralNetwork>(jsonString);
+            return sNet.Deserialized();
+        }
+        return null;
     }
     #endregion
 

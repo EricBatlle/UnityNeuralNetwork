@@ -40,6 +40,11 @@ public static class NeuralNetworkSerializer
     #endregion  
 
     #region Serialize/Deserialize NeuralNetwork
+    /// <summary>
+    /// Extension method that deserializes neural network serializable struct to create new NeuralNetwork class
+    /// </summary>
+    /// <param name="sNet"></param>
+    /// <returns></returns>
     public static NeuralNetwork Deserialized(this SerializableNeuralNetwork sNet)
     {
         //Creation of NeuralNetwork using sNet layers to initialize structure and assign the direct-serialize fields
@@ -70,18 +75,9 @@ public static class NeuralNetworkSerializer
         
         return new NeuralNetwork(net);
     }
-
+    
     /// <summary>
-    /// Save agent neural network information into JSON file
-    /// </summary>
-    public static void SaveNeuralNetwork(this NeuralNetwork net)
-    {
-        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(net.Serialized());
-        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
-    }
-
-    /// <summary>
-    /// Extension method who returns the serialized neural network
+    /// Extension method to serialize neural network class
     /// </summary>
     /// <param name="net">Neural network to serialize</param>
     /// <returns></returns>
@@ -119,9 +115,7 @@ public static class NeuralNetworkSerializer
             }
             sNeuralNetwork.weigths.Add(sWeigthList);
         }
-
-        //Original Weigths
-
+        
         return sNeuralNetwork;        
     }
     #endregion
