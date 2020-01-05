@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
+using UnityEngine;
+using System.Runtime.Serialization;
 
 /// <summary>
 /// Neural Network (Genetic, Unsupervised)
@@ -13,21 +15,10 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     public float fitness;         //fitness of the network
 
     /// <summary>
-    /// Initilizes neural network with random weights
+    /// Default empty constructor used mainly when loading different neuralNetworks
     /// </summary>
-    /// <param name="layers">layers to the neural network</param>
-    public NeuralNetwork(int[] layers)
+    public NeuralNetwork()
     {
-        //Deep copy of layers of this network 
-        this.layers = new int[layers.Length];
-        for (int i = 0; i < layers.Length; i++)
-        {
-            this.layers[i] = layers[i];
-        }
-
-        //Generate matrixs
-        InitNeurons();
-        InitWeights();
     }
 
     /// <summary>
@@ -48,6 +39,24 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         InitWeights();
 
         CopyWeights(copyNetwork.weights);
+    }
+
+    /// <summary>
+    /// Initilizes neural network with random weights
+    /// </summary>
+    /// <param name="layers">layers to the neural network</param>
+    public NeuralNetwork(int[] layers)
+    {
+        //Deep copy of layers of this network 
+        this.layers = new int[layers.Length];
+        for (int i = 0; i < layers.Length; i++)
+        {
+            this.layers[i] = layers[i];
+        }
+
+        //Generate matrixs
+        InitNeurons();
+        InitWeights();
     }
 
     /// <summary>
@@ -224,7 +233,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     /// <param name="other">Network to be compared to</param>
     /// <returns></returns>
     public int CompareTo(NeuralNetwork other)
-    {
+    {                
         if (other == null) return 1;
 
         if (fitness > other.fitness)
@@ -232,6 +241,6 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
         else if (fitness < other.fitness)
             return -1;
         else
-            return 0;
-    }
+            return 0;        
+    }    
 }

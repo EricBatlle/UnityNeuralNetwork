@@ -35,6 +35,13 @@ public abstract class AgentsManager : MonoBehaviour
         this.InvokeRepeating(TrainAgents, newGenerationRateTime);
     }
 
+    [ContextMenu("Restart Training")]
+    private void RestartTraining()
+    {
+        CancelInvoke();
+        this.Start();
+    }
+
     /// <summary>
     /// This is needed cause properties aren't called by UnityEditor changes
     /// </summary>
@@ -66,7 +73,7 @@ public abstract class AgentsManager : MonoBehaviour
                 agentsNets[i] = new NeuralNetwork(agentsNets[i+(populationSize / 2)]);
                 agentsNets[i].Mutate();
 
-                //too lazy to write a reset neuron matrix values method....so just going to make a deepcopy
+                //too lazy to write a reset neuron matrix for the second half of the population (the smartest) values method....so just going to make a deepcopy
                 agentsNets[i + (populationSize / 2)] = new NeuralNetwork(agentsNets[i + (populationSize / 2)]); 
             }
 

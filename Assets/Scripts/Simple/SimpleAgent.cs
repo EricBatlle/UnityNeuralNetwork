@@ -29,6 +29,11 @@ public class SimpleAgent : Agent
         rewardLocation = (Vector3)info[0];
     }
 
+    protected override void SetInfo()
+    {
+        rewardLocation = new Vector3(-6.9f, 0,0);
+    }
+
     //Get direction depending of the distance between the agent and the reward
     protected override void CollectEnvironmentInformation()
     {

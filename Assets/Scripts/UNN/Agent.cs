@@ -8,10 +8,14 @@ public abstract class Agent : MonoBehaviour
 {
     [Header("Agent")]
     [SerializeField] public bool initilized = false;           //flag to know if the agent have been activated
-    [SerializeField] protected NeuralNetwork net;               //neural network associated to the agent
+    [SerializeField] public NeuralNetwork net = null;               //neural network associated to the agent
     [SerializeField] protected object[] info = null;            //info passed to the agent to generate inputs
     [SerializeField] protected float[] inputs = new float[1];   //actions that the agent can make
     [SerializeField] protected float[] outputs = null;          //outputs calculated by agent neural network    
+    [Header("Loaded Neural Network")]
+    [SerializeField] protected TextAsset neuralNetworkToLoad = null;
+
+    public SerializableNeuralNetwork sNet;
 
     /// <summary>
     /// Initialize Agent behaviour
@@ -20,7 +24,11 @@ public abstract class Agent : MonoBehaviour
     /// <param name="info">Information passed to the agent to help him calculate his actions</param>
     public virtual void Init(NeuralNetwork net, params object[] info)
     {
-        this.net = net;
+        if (neuralNetworkToLoad != null)
+            LoadAgentNeuralNetwork();
+        else
+            this.net = net;
+
         this.initilized = true;
         this.info = info;
     }
@@ -76,12 +84,33 @@ public abstract class Agent : MonoBehaviour
     }
     #endregion
 
+    #region Save/Load agent neural network
     /// <summary>
     /// Save agent neural network information into JSON file
     /// </summary>
-    public void SaveNeuralNetwork()
+    public void SaveAgentNeuralNetwork()
     {
-        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(this.net.Serializable());
+        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(this.net.Serialized());
         JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
+    }
+    public void LoadAgentNeuralNetwork()
+    {
+        if (neuralNetworkToLoad == null)     
+            print("There is no Neural Network TextAsset attached");
+        else
+        {
+            string jsonString = JsonManager.ReadJSONFile(neuralNetworkToLoad);
+            SerializableNeuralNetwork sNet = JsonManager.DeserializeFromJson<SerializableNeuralNetwork>(jsonString);
+            this.net = sNet.Deserialized();
+            this.sNet = sNet;
+        }
+        this.initilized = true;
+        SetInfo();
+    }
+    #endregion
+
+    protected virtual void SetInfo()
+    {
+
     }
 }

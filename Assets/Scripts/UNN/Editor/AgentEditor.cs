@@ -18,10 +18,12 @@ public class AgentEditor : Editor
         {
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Save Neural Network"))
-                agent.SaveNeuralNetwork();
-            GUILayout.EndHorizontal();
-            GUILayout.Space(10);
-        }        
+                agent.SaveAgentNeuralNetwork();            
+            GUILayout.EndHorizontal();            
+        }
+        if (GUILayout.Button("Load Neural Network"))
+            agent.LoadAgentNeuralNetwork();
+        GUILayout.Space(10);
     }
 
 }

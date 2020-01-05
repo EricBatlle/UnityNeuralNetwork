@@ -37,14 +37,55 @@ public static class NeuralNetworkSerializer
     {
         public float[] weigth;
     }
-    #endregion
+    #endregion  
+
+    #region Serialize/Deserialize NeuralNetwork
+    public static NeuralNetwork Deserialized(this SerializableNeuralNetwork sNet)
+    {
+        //Creation of NeuralNetwork using sNet layers to initialize structure and assign the direct-serialize fields
+        NeuralNetwork net = new NeuralNetwork();
+        net.layers = sNet.layers;
+        net.fitness = sNet.fitness;
+
+        //Deserialize Neurons from List<SerializableNueron>
+        List<float[]> neuronsList = new List<float[]>();
+        foreach (SerializableNeuron sNeuron in sNet.neurons)
+        {
+            neuronsList.Add(sNeuron.neuron);
+        }
+        net.neurons = neuronsList.ToArray();
+
+        //Deserialize Weights from List<SerializableWeightsList>
+        List<float[][]> weigthsList = new List<float[][]>();
+        foreach (SerializableWeigthList sWeightList in sNet.weigths)
+        {
+            List<float[]> layerWeigthsList = new List<float[]>();
+            foreach (SerializableWeigth sWeight in sWeightList.weightList)
+            {
+                layerWeigthsList.Add(sWeight.weigth);
+            }
+            weigthsList.Add(layerWeigthsList.ToArray());            
+        }
+        net.weights = weigthsList.ToArray();
+        
+        return new NeuralNetwork(net);
+    }
+
+    /// <summary>
+    /// Save agent neural network information into JSON file
+    /// </summary>
+    public static void SaveNeuralNetwork(this NeuralNetwork net)
+    {
+        string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(net.Serialized());
+        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
+    }
 
     /// <summary>
     /// Extension method who returns the serialized neural network
     /// </summary>
     /// <param name="net">Neural network to serialize</param>
     /// <returns></returns>
-    public static SerializableNeuralNetwork Serializable(this NeuralNetwork net)
+    public static SerializableNeuralNetwork Serialized(this NeuralNetwork net)
     {        
         //Creation of SerializableNeuralNetwork and assign the direct-serialize fields
         SerializableNeuralNetwork sNeuralNetwork;
@@ -79,6 +120,9 @@ public static class NeuralNetworkSerializer
             sNeuralNetwork.weigths.Add(sWeigthList);
         }
 
+        //Original Weigths
+
         return sNeuralNetwork;        
     }
+    #endregion
 }
