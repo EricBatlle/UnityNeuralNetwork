@@ -12,7 +12,7 @@ public static class SimpleExtensions
     {
         mono.StartCoroutine(ExecuteAfterTime(action, delay));
     }
-    public static void InvokeAndGetCoroutine(this MonoBehaviour mono, Action action, float delay)
+    public static Coroutine InvokeAndGetCoroutine(this MonoBehaviour mono, Action action, float delay)
     {
         Coroutine coroutine = mono.StartCoroutine(ExecuteAfterTime(action, delay));
         return coroutine;
