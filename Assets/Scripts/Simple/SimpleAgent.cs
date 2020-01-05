@@ -11,7 +11,7 @@ public class SimpleAgent : Agent
     [SerializeField] private Renderer rendererComponent = null;
     private Material mat;
 
-    private Vector3 rewardLocation = new Vector3();
+    private GameObject rewardLocation = null;
     private float direction = 0f;
     private float distanceToReward = 0f;
 
@@ -26,18 +26,18 @@ public class SimpleAgent : Agent
     public override void Init(NeuralNetwork net, params object[] info)
     {
         base.Init(net, info);
-        rewardLocation = (Vector3)info[0];
+        rewardLocation = (GameObject)info[0];
     }
 
     protected override void SetInfo()
     {
-        rewardLocation = new Vector3(-6.9f, 0,0);
+        rewardLocation = new GameObject();
     }
 
     //Get direction depending of the distance between the agent and the reward
     protected override void CollectEnvironmentInformation()
     {
-        distanceToReward = transform.position.x - rewardLocation.x;
+        distanceToReward = transform.position.x - rewardLocation.transform.position.x;
         direction = 1f;
 
         if (distanceToReward < 0)        

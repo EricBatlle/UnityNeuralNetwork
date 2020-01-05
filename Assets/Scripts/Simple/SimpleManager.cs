@@ -13,7 +13,7 @@ public class SimpleManager : AgentsManager
     {
         Agent agent = Instantiate(agentPrefab).GetComponent<Agent>();
         agent.transform.SetParent(agentsParentGO.transform);
-        agent.Init(agentsNets[agentNumber], rewardGO.transform.localPosition);
+        agent.Init(agentsNets[agentNumber], rewardGO);
         return agent;
     }
 }
