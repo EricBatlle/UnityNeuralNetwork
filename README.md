@@ -11,6 +11,16 @@ Builded with **C#** from scratch, avoiding complex (and black-boxed) frameworks 
   <img src="SimpleVideo.gif" alt="simple video gif"/>
 </p>
 
+## Table of Contents 
+
+- [⚙️ How to Use](#how-to-use)
+- [🧬 Which kind of NeuralNetwork is this one](#which-kind-of-neuralnetwork-is-this-one)
+- [🤖 What is an Agent](#what-is-an-agent)
+- [🏋️‍♂️ How the Manager train the Agents](#how-the-manager-train-the-agents)
+- [📜 UNN Explanations](#unn-explanations)
+- [🧠 Transferable Brains](#transferable-brains)
+- [Thanks](#thanks)
+
 ## How to Use ⚙️
 
 If you want to open the project, you need to have **Unity** installed with the **2017 version or higher**.
@@ -52,7 +62,7 @@ Every Agent will **have his own NeuralNetwork** that acts as a brain. This Neura
 * **Calculate his reward**. Depending of his action, the reward will be bigger or lower. This will be used to score the agent success.
 * 🔄 **Restart the process**.
 
-## How the Manager train the Agents🏋️‍♂️
+## How the Manager train the Agents 🏋️‍♂️
 
 The behaviour of the scene will be controlled by a **Manager**, his behaviour will follow those steps:
 
@@ -120,7 +130,7 @@ The Manager class can Start the training when the scene starts if the checkbox *
 
 ###  ``Agent.cs``
 
-This abstract class includes all the agents life-cycle explained in [what is an agent](#what-is-an-agent). It includes all the cycle abstract methods required to implement a new agent.
+This abstract class includes all the agents life-cycle explained in [What is an Agent](#what-is-an-agent). It includes all the cycle abstract methods required to implement a new agent.
 
 ```cs
 protected abstract void CollectEnvironmentInformation();
