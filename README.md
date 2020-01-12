@@ -13,13 +13,13 @@ Builded with **C#** from scratch, avoiding complex (and black-boxed) frameworks 
 
 ## Table of Contents 
 
-- [⚙️ How to Use](#how-to-use)
-- [🧬 Which kind of NeuralNetwork is this one](#user-content-which-kind-of-neuralnetwork-is-this-one-)
-- [🤖 What is an Agent](#what-is-an-agent)
-- [🏋️‍♂️ How the Manager train the Agents](#how-the-manager-train-the-agents)
-- [📜 UNN Explanations](#unn-explanations)
-- [🧠 Transferable Brains](#transferable-brains)
-- [Thanks](#thanks)
+- [⚙️ How to Use](#how-to-use-)
+- [🧬 Which kind of NeuralNetwork is this one](#which-kind-of-neuralnetwork-is-this-one-)
+- [🤖 What is an Agent](#what-is-an-agent-)
+- [🏋️‍♂️ How the Manager train the Agents](#how-the-manager-train-the-agents-)
+- [📜 UNN Explanations](#unn-explanations-)
+- [🧠 Transferable Brains](#transferable-brains-)
+- [Thanks](#thanks-)
 
 ## How to Use ⚙️
 
