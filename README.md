@@ -1,4 +1,4 @@
-#UnityNeuralNetwork 
+# UnityNeuralNetwork 
 *Created by Eric Batlle Clavero*
 
  A simple **Unity project** that implements a **Genetic Unsupervised NeuralNetwork interface** and includes different and updated scenarios of how to implement it. 
@@ -11,7 +11,7 @@ Builded with **C#** from scratch, avoiding complex (and black-boxed) frameworks 
   <img src="SimpleVideo.gif" alt="simple video gif"/>
 </p>
 
-##How to Use ⚙️
+## How to Use ⚙️
 
 If you want to open the project, you need to have **Unity** installed with the **2017 version or higher**.
 
@@ -27,14 +27,14 @@ Scripts are divided in **3 folders:**
 
 * ``Examples``, includes scripts used on the example scenes, really useful to see how to implement the scripts from ``UNN``.
 
-##Which kind of NeuralNetwork is this one 🧬
+## Which kind of NeuralNetwork is this one 🧬
 
 The neural network used in this project is an **Unsupervised** one, meaning that you do not need to control (or supervise) the agents that is training. 
 Instead you program them to work **on its own** to discover new ways to reach the objective.
 
 It is also a **Genetic** neural network, meaning that the agents will be inflicted by operators which are bio-inspired. In this case they will be polished due to **Mutations** and **Selections**.
 
-##What is an Agent 🤖
+## What is an Agent 🤖
 <p>
   <img align="right" src="Agent3D.PNG" alt="3D Agent picture"/>
 </p>
@@ -67,7 +67,7 @@ The behaviour of the scene will be controlled by a **Manager**, his behaviour wi
 
 
 
-##UNN Explanations 📜
+## UNN Explanations 📜
 
 UNN is the directory that contains the base classes to inherit or implement new functionalities if you want to extend your own scenario.
 
@@ -129,7 +129,7 @@ protected abstract void AgentAction();
 protected abstract float CalculateFitnessGain();
 ```
 
-##Transferable Brains 🧠
+## Transferable Brains 🧠
 All the agents NeuralNetworks can be serialized and deserialized, that means that you can leave an agent training, and then press the button **Save Neural Network** to store the trained neural network on a JSON file in the ``Assets`` directory.
 
 This JSONed brain can be later introduced on a new agent, to let him start to learn from the point the other agent left. The way to do that is link the **TextAsset** JSON file into the **LoadedNeuralNetwork** editor variable space and press the button **Load Neural Network**.
