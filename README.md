@@ -14,7 +14,7 @@ Builded with **C#** from scratch, avoiding complex (and black-boxed) frameworks 
 ## Table of Contents 
 
 - [⚙️ How to Use](#how-to-use)
-- [🧬 Which kind of NeuralNetwork is this one](#which-kind-of-neuralnetwork-is-this-one)
+- [🧬 Which kind of NeuralNetwork is this one](#user-content-which-kind-of-neuralnetwork-is-this-one-)
 - [🤖 What is an Agent](#what-is-an-agent)
 - [🏋️‍♂️ How the Manager train the Agents](#how-the-manager-train-the-agents)
 - [📜 UNN Explanations](#unn-explanations)
@@ -83,10 +83,10 @@ UNN is the directory that contains the base classes to inherit or implement new 
 
 The scripts included on the directory, appart from the Editor ones are:
 
-###``NeuralNetwork.cs``
+### ``NeuralNetwork.cs``
 This is the class structured to include the Neural Network topology, with layers, neurons and connections. It also includes the functionalities to Save and Load generated networks.
 
-####``NeuralNetworkSerializer.cs`` 
+#### ``NeuralNetworkSerializer.cs`` 
 This class is needed to serialize/deserialize NeuralNetworks cause Unity do not allow the automatically serialization of jagged array or complex structs. It also uses my own JsonManager, one of my [SimpleUnityUtils](https://github.com/ls29322/SimpleUnityUtils), explained and used on the repo.
 
 The way to correctly **serialize and deserialize** a NeuralNetwork is the following: 
