@@ -120,7 +120,7 @@ The Manager class can Start the training when the scene starts if the checkbox *
 
 ###  ``Agent.cs``
 
-This abstract class includes all the agents life-cycle explained in [What is an Agent](#what-is-an-agent). It includes all the cycle abstract methods required to implement a new agent.
+This abstract class includes all the agents life-cycle explained in [what is an agent](#what-is-an-agent). It includes all the cycle abstract methods required to implement a new agent.
 
 ```cs
 protected abstract void CollectEnvironmentInformation();
