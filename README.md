@@ -126,7 +126,7 @@ protected virtual Agent CreateAgentGO(int agentNumber, TextAsset neuralNetworkTo
 
 The 3rd overrideable method called **CreateSeparatedAgentGO()** is only needed in the  case that you don't want to use a Manager in your scene to create the agent spawned.
 
-The Manager class can Start the training when the scene starts if the checkbox **trainOnStart** is marked, or if is not checked, it have an interactable buttons to start the train, to stop the training cycle, to restarts it or to resume.
+The Manager class can Start the training when the scene starts if the checkbox **trainOnStart** is marked, or if it is not checked, it has an interactable buttons to start the train, to stop the training cycle, to restart it or to resume.
 
 ###  ``Agent.cs``
 
