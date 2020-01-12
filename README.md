@@ -31,7 +31,7 @@ If you only want to scratch the code, either inside the unity project or simply 
 
 Scripts are divided in **3 folders:**
 
-* ``UNN``, here are the important ones, it includes all the interfaces, classes and editor scripts to use and implement the agents, neural networks, managers, etc. More explained below on - [UNN Explanations](#unn-explanations).
+* ``UNN``, here are the important ones, it includes all the interfaces, classes and editor scripts to use and implement the agents, neural networks, managers, etc. More explained below on - [UNN Explanations](#unn-explanations-).
 
 * ``Utils``, includes a couple of scripts to facilitate some coding tasks like JSON serialization, or new Unity PropertyAttributes.
 
@@ -102,7 +102,7 @@ SerializableNeuralNetwork sNet = JsonManager.DeserializeFromJson<SerializableNeu
 ```
 
 ### ``AgentsManager.cs``
-This **abstract** class includes the training cycle explained in [How The Manager train the Agents](#how-the-manager-train-the-agents). The only thing to be aware is that even being an abstract class, there are 2 virtual functions that should be override if you want to extend this class:
+This **abstract** class includes the training cycle explained in [How The Manager train the Agents](#how-the-manager-train-the-agents-). The only thing to be aware is that even being an abstract class, there are 2 virtual functions that should be override if you want to extend this class:
 
 ```cs
 /// <summary>
@@ -130,7 +130,7 @@ The Manager class can Start the training when the scene starts if the checkbox *
 
 ###  ``Agent.cs``
 
-This abstract class includes all the agents life-cycle explained in [What is an Agent](#what-is-an-agent). It includes all the cycle abstract methods required to implement a new agent.
+This abstract class includes all the agents life-cycle explained in [What is an Agent](#what-is-an-agent-). It includes all the cycle abstract methods required to implement a new agent.
 
 ```cs
 protected abstract void CollectEnvironmentInformation();
