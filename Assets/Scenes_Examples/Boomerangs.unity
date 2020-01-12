@@ -166,7 +166,7 @@ MonoBehaviour:
   trainOnStart: 1
   agentPrefab: {fileID: 1078310815301990, guid: 34dfa889ddd042d4bb996918f6439614,
     type: 3}
-  newTimeScale: 10
+  newTimeScale: 1
   newGenerationRateTime: 15
   populationSize: 5
   neuralNetworkToLoad: {fileID: 0}
@@ -321,7 +321,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_BackGroundColor: {r: 0.46666667, g: 0.5647059, b: 0.60784316, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
