@@ -7,11 +7,11 @@
 public class SimpleAgent : Agent
 {
     [Header("Simple")]
-    [SerializeField] private Rigidbody rBody = null;
+    [SerializeField] protected Rigidbody rBody = null;
     [SerializeField] private Renderer rendererComponent = null;
     private Material mat;
 
-    private GameObject rewardGO = null;
+    protected GameObject rewardGO = null;
     private float direction = 0f;
     private float distanceToReward = 0f;
 
@@ -71,7 +71,7 @@ public class SimpleAgent : Agent
     }
 
     //Change Color of the agent depending of the distance to the reward
-    private void ChangeAgentColor()
+    protected void ChangeAgentColor()
     {          
         mat.color = new Color(distanceToReward / 20f, (1f - (distanceToReward / 20f)), (1f - (distanceToReward / 20f)));
     }

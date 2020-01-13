@@ -10,10 +10,10 @@ using static NeuralNetworkSerializer;
 [Serializable]
 public class NeuralNetwork : IComparable<NeuralNetwork>
 {
-    [DisplayWithoutEdit]public int[] layers;          //layers
-    public float[][] neurons;     //neuron matix
-    public float[][][] weights;   //weight matrix
-    public float fitness;         //fitness of the network
+    [DisplayWithoutEdit]public int[] layers;    //layers
+    public float[][] neurons;                   //neuron matix
+    public float[][][] weights;                 //weight matrix
+    public float fitness;                       //fitness of the network
 
     /// <summary>
     /// Default empty constructor used mainly when loading different neuralNetworks

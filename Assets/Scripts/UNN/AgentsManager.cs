@@ -19,11 +19,11 @@ public abstract class AgentsManager : MonoBehaviour
         set { newTimeScale = value; Time.timeScale = newTimeScale; }
     }
     [SerializeField] protected float newGenerationRateTime = 15f;   //Time to wait until make a new generation
+    [DisplayWithoutEdit][SerializeField] protected int currentGenerationNumber = 0;
     [Space()]
     [Tooltip("Is recommended to have an even number of agents")]
     [SerializeField] protected int populationSize = 50;             //...to speed training cause training use the half of the population(population/2)
-    [DisplayWithoutEdit] protected int currentGenerationNumber = 0;
-    [DisplayWithoutEdit] protected int[] layers = new int[] { 1, 10, 10, 1 }; //1 input and 1 output
+    [SerializeField] protected int[] layers = new int[] { 1, 10, 10, 1 }; //1 input and 1 output
     [Header("Neural Network to Load")]
     public TextAsset neuralNetworkToLoad = null;
     public bool createNetxGenerationWithThisNet = false;
