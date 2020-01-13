@@ -12,8 +12,8 @@ public class SimpleAgent : Agent
     private Material mat;
 
     protected GameObject rewardGO = null;
-    private float direction = 0f;
-    private float distanceToReward = 0f;
+    protected float direction = 0f;
+    protected float distanceToReward = 0f;
 
     //Get component references and set initial position
     private void Start()

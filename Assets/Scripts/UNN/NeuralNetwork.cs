@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using System.Runtime.Serialization;
 using static NeuralNetworkSerializer;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Neural Network (Genetic, Unsupervised)
@@ -235,7 +236,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     public void SaveNeuralNetworkToJSON()
     {
         string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(this.Serialized());
-        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
+        JsonManager.WriteJSONFile("NeuralNetworkJSON_"+ SceneManager.GetActiveScene().name, jsonString, "Assets/JSON_NeuralNetworks/"+ SceneManager.GetActiveScene().name);
     }
     /// <summary>
     /// Static saving Neural Network serialized information to JSON file
@@ -243,7 +244,7 @@ public class NeuralNetwork : IComparable<NeuralNetwork>
     public static void SaveNeuralNetworkToJSON(NeuralNetwork net)
     {
         string jsonString = JsonManager.SerializeToJson<SerializableNeuralNetwork>(net.Serialized());
-        JsonManager.WriteJSONFile("NeuralNetworkJSON", jsonString);
+        JsonManager.WriteJSONFile("NeuralNetworkJSON_" + SceneManager.GetActiveScene().name, jsonString, "Assets/JSON_NeuralNetworks/" + SceneManager.GetActiveScene().name);
     }
 
     /// <summary>

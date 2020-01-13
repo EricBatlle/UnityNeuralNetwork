@@ -43,6 +43,14 @@ public static class JsonManager
     //Write to JSON
     public static void WriteJSONFile(string fileName, string content, string storingPath ="Assets")
     {
+        //Check if storingPath exists, if not, create the directories and subdirectories
+        if(!Directory.Exists(storingPath))
+        {
+            Debug.Log(string.Format("Path directory {0} does not exist, created now.", storingPath));
+            Directory.CreateDirectory(storingPath);
+        }
+
+        //Give the fileName an index in case the name already exists file--> file_1
         string completePath = storingPath + "/" + fileName+".json";
         string newFilename = fileName + "_";
         int i = 0;
@@ -56,6 +64,7 @@ public static class JsonManager
             i++;
         } while (File.Exists(completePath));
         
+        //Write the JSON file
         StreamWriter writer = new StreamWriter(completePath, true);
         writer.Write(content);
         writer.Close();

@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Simple3DAgent : SimpleAgent
 {
-    private float distanceToReward = 0f;
     private Vector2 distanceToRewardVector = new Vector2(1,1);
-    private Vector2 direction = new Vector2(1,1);
+    private Vector2 directionVector = new Vector2(1,1);
 
     //Get direction depending of the distance between the agent and the reward
     protected override void CollectEnvironmentInformation()
@@ -15,29 +14,29 @@ public class Simple3DAgent : SimpleAgent
         distanceToRewardVector.x = transform.position.x - rewardGO.transform.position.x;
         distanceToRewardVector.y = transform.position.z - rewardGO.transform.position.z;
 
-        direction = new Vector2(1,1);
+        directionVector = new Vector2(1,1);
 
         if (distanceToRewardVector.x < 0)
-            direction.x = 1;
+            directionVector.x = 1;
         else if (distanceToRewardVector.x > 0)
-            direction.x = -1;
+            directionVector.x = -1;
         else
-            direction.x = 0;
+            directionVector.x = 0;
 
         if (distanceToRewardVector.y < 0)
-            direction.y = 1;
+            directionVector.y = 1;
         else if (distanceToRewardVector.y > 0)
-            direction.y = -1;
+            directionVector.y = -1;
         else
-            direction.y = 0;
+            directionVector.y = 0;
     }
 
     //Set direction as new input
     protected override void SetNewInputs()
     {
         this.inputs = new float[2];
-        this.inputs[0] = direction.x;
-        this.inputs[1] = direction.y;
+        this.inputs[0] = directionVector.x;
+        this.inputs[1] = directionVector.y;
     }
 
     //Set velocity direction on X depending of the output
