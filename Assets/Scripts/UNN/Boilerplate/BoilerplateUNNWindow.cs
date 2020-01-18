@@ -115,6 +115,16 @@ public class BoilerplateUNNWindow : EditorWindow
 /// </summary>
 public class " + scenarioName+@"Agent : Agent
 {
+    protected override void CollectEnvironmentInformation()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void SetNewInputs()
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override void AgentAction()
     {
         throw new System.NotImplementedException();
@@ -125,17 +135,7 @@ public class " + scenarioName+@"Agent : Agent
         throw new System.NotImplementedException();
     }
 
-    protected override void CollectEnvironmentInformation()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void LoadInfo()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void SetNewInputs()
     {
         throw new System.NotImplementedException();
     }
