@@ -7,7 +7,6 @@ public class SudokuGenerator : MonoBehaviour
 {
     [Header("Sudoku Design Info")]
     [SerializeField] private int cellsInSquare = 4;
-    [SerializeField][DisplayWithoutEdit] private int cellsInSquareSide = 2;
     [Header("UI References")]    
     [SerializeField] private GameObject canvasGO = null;
     [Header("Prefabs")]
@@ -22,15 +21,15 @@ public class SudokuGenerator : MonoBehaviour
         containerGO.transform.SetParent(canvasGO.transform, false);
 
         Sudoku newSudoku = new Sudoku(cellsInSquare);
-        containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;
+        containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;        
 
         //Change Container layout parameters
         FlexibleGridLayoutGroup containerLayout = containerGO.GetComponent<FlexibleGridLayoutGroup>();
-        containerLayout.rows = cellsInSquareSide;
+        containerLayout.rows = newSudoku.cellsInSquareSide;
         containerLayout.cols = containerLayout.rows; //cause it's an square        
         //Change Grid prefab layout parameters
         FlexibleGridLayoutGroup gridPrefabLayout = sudokuGrid_prefab.GetComponent<FlexibleGridLayoutGroup>();
-        gridPrefabLayout.rows = cellsInSquareSide;
+        gridPrefabLayout.rows = newSudoku.cellsInSquareSide;
         gridPrefabLayout.cols = containerLayout.rows; //cause it's an square
 
         //Create grids

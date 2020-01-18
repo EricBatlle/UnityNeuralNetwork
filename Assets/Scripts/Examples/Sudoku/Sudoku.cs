@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -10,17 +11,39 @@ public class Sudoku
     public struct Row
     {
         public List<int> rowNumbers;
+        public bool isAnyValueRepeated;        
     }
     [Serializable]
     public struct Column
     {
-        public List<int> columnNumbers;
+        public List<int> columnNumbers;        
+        [SerializeField] private bool isAnyValueRepeated;        
+        public bool IsAnyValueRepeated
+        {
+            get => ThereAreRepeatedValues();
+            set => isAnyValueRepeated = value;
+        }
+
+        private bool ThereAreRepeatedValues()
+        {
+            if (columnNumbers.Count != columnNumbers.Distinct().Count())
+            {
+                Debug.Log("there are duplicates");
+                return true;
+            }
+            else
+            {
+                Debug.Log("all diferents");
+                return false;
+            }
+        }
     }
     [Serializable]
     public struct SquareGrid
     {
         public int id;
         public List<int> contentNumbers;
+        public bool isAnyValueRepeated;        
     }
     [Serializable]
     public struct SudokuCellStruct
@@ -32,6 +55,7 @@ public class Sudoku
         public SquareGrid belongingGrid;
     }
     #endregion
+
     [SerializeField] public int cellsInSquare = 4;
     [SerializeField] [DisplayWithoutEdit] public int cellsInSquareSide = 2;
     [SerializeField] public int[] allSudokuNumbers = new int[16];
@@ -44,6 +68,22 @@ public class Sudoku
     {
         this.cellsInSquare = cellsInSquare;
         InitializeGridsAndCellsStructs();
+    }
+
+    private void FindRepeatedValues()
+    {
+        foreach(Column column in columns)
+        {
+            if (column.columnNumbers.Any(o => o != column.columnNumbers[0]))
+            {
+                Debug.Log("all equals");
+            }
+            else
+            {
+                Debug.Log("all diferents");
+            }
+
+        }
     }
 
     private void InitializeGridsAndCellsStructs()

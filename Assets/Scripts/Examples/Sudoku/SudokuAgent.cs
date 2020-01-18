@@ -6,8 +6,11 @@ using UnityEngine;
 /// </summary>
 public class SudokuAgent : Agent
 {
+    private SudokuController sudokuController = null;
+
     protected override void CollectEnvironmentInformation()
     {
+        //Calculate how many numbers
         throw new System.NotImplementedException();
     }
 
