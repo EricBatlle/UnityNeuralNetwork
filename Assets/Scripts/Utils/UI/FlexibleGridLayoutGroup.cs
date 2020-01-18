@@ -6,8 +6,8 @@ using UnityEngine.UI;
 [ExecuteInEditMode()]
 public class FlexibleGridLayoutGroup : MonoBehaviour
 {
-    [SerializeField] private int rows = 0;
-    [SerializeField] private int cols = 0;
+    public int rows = 0;
+    public int cols = 0;
     private RectTransform parentRect = null;
     private GridLayoutGroup gridLayout = null;
 
