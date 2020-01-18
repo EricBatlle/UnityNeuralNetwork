@@ -44,8 +44,9 @@ public class SudokuGenerator : MonoBehaviour
     [SerializeField] private List<Column> columns = new List<Column>();
     [SerializeField] private List<SquareGrid> grids = new List<SquareGrid>();
     [Header("UI References")]    
-    [SerializeField] private GameObject sudokuContainerGO = null;
+    [SerializeField] private GameObject canvasGO = null;
     [Header("Prefabs")]
+    [SerializeField] private GameObject sudokuContainer_prefab = null;
     [SerializeField] private GameObject sudokuGrid_prefab = null;
     [SerializeField] private GameObject sudokuCell_prefab = null;
 
@@ -137,8 +138,11 @@ public class SudokuGenerator : MonoBehaviour
     [ContextMenu("Generate Grid")]
     private void GenerateGrid()
     {
+        GameObject containerGO = Instantiate(sudokuContainer_prefab);
+        containerGO.transform.SetParent(canvasGO.transform, false);
+
         //Change Container layout parameters
-        FlexibleGridLayoutGroup containerLayout = sudokuContainerGO.GetComponent<FlexibleGridLayoutGroup>();
+        FlexibleGridLayoutGroup containerLayout = containerGO.GetComponent<FlexibleGridLayoutGroup>();
         containerLayout.rows = cellsInSquareSide;
         containerLayout.cols = containerLayout.rows; //cause it's an square        
         //Change Grid prefab layout parameters
@@ -151,7 +155,7 @@ public class SudokuGenerator : MonoBehaviour
         {
             GameObject newGrid = Instantiate(sudokuGrid_prefab);
             newGrid.GetComponent<SudokuGrid>().model = grids[i];
-            newGrid.transform.SetParent(sudokuContainerGO.transform);
+            newGrid.transform.SetParent(containerGO.transform);
             //foreach grid create his cells            
             for (int t = 0; t < allSudokuCells.Length; t++)
             {
@@ -169,7 +173,7 @@ public class SudokuGenerator : MonoBehaviour
     [ContextMenu("Clear SudokuContainer")]
     private void ClearSudokuContainer()
     {
-        List<Transform> tempList = sudokuContainerGO.transform.Cast<Transform>().ToList();
+        List<Transform> tempList = canvasGO.transform.Cast<Transform>().ToList();
         foreach (Transform child in tempList)
             DestroyImmediate(child.gameObject);        
     }
