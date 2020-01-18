@@ -6,6 +6,16 @@ using UnityEngine;
 /// </summary>
 public class SudokuAgent : Agent
 {
+    protected override void CollectEnvironmentInformation()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void SetNewInputs()
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override void AgentAction()
     {
         throw new System.NotImplementedException();
@@ -16,18 +26,9 @@ public class SudokuAgent : Agent
         throw new System.NotImplementedException();
     }
 
-    protected override void CollectEnvironmentInformation()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void LoadInfo()
     {
         throw new System.NotImplementedException();
     }
 
-    protected override void SetNewInputs()
-    {
-        throw new System.NotImplementedException();
-    }
 }

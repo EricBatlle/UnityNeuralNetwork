@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static SudokuGenerator;
+﻿using UnityEngine;
+using static Sudoku;
 
 public class SudokuGrid : MonoBehaviour
 {

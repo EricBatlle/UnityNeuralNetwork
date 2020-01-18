@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7965430822741188837}
+  - component: {fileID: 1048776842685258845}
   - component: {fileID: 2398119180830713562}
   - component: {fileID: 7407194640613339093}
   m_Layer: 5
-  m_Name: SudokuContainer
+  m_Name: SudokuContainerController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,6 +38,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1048776842685258845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7965430822741188834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4974969dc19379541bec02c95c713c91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sudokuModel:
+    cellsInSquare: 0
+    cellsInSquareSide: 0
+    allSudokuNumbers: 
+    allSudokuCells: []
+    rows: []
+    columns: []
+    grids: []
 --- !u!114 &2398119180830713562
 MonoBehaviour:
   m_ObjectHideFlags: 0
