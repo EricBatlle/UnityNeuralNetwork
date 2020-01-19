@@ -1,12 +1,32 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static Sudoku;
 
 /// <summary>
 /// This class collects all the extensions used to improve or facilitate the use of in-build methods
 /// </summary>
 public static class SimpleExtensions
 {
+    #region Lists
+    public static bool ThereAreRepeatedValuesOnCellList(this List<SudokuCellStruct> list)
+    {
+        if (list.Count != list.Select(cell => cell.CellValue).Distinct().Count())
+        {
+            Debug.Log("there are duplicates");
+            return true;
+        }
+        else
+        {
+            Debug.Log("all diferents");
+            return false;
+        }
+    }
+    #endregion
+
+    #region MonoBehaviour
     //Invoke
     public static void Invoke(this MonoBehaviour mono, Action action, float delay)
     {
@@ -42,5 +62,6 @@ public static class SimpleExtensions
             action();
             yield return new WaitForSeconds(repeatRate);
         }
-    }    
+    }
+    #endregion
 }

@@ -17,6 +17,8 @@ public class SudokuGenerator : MonoBehaviour
     [ContextMenu("Generate Sudoku")]
     private void GenerateSudoku()
     {
+        ClearSudokuContainer();
+
         GameObject containerGO = Instantiate(sudokuContainer_prefab);
         containerGO.transform.SetParent(canvasGO.transform, false);
 
