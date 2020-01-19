@@ -7,14 +7,12 @@ public class SudokuController : MonoBehaviour
 {
     public Sudoku sudokuModel = null;
     //ToDo: UI creations go here, but IDK how to do it right now
-    //public SudokuCellStruct cell;
+    public int cellID;
+    public int newValue;
 
     [ContextMenu("Chang")]
     private void ChangeValue()
     {        
-        //cell = sudokuModel.GetCellFromID(0);
-        //cell.CellValue = Random.Range(0, 9);
-
-        sudokuModel.GetCellFromID(0).CellValue = Random.Range(0, 9);
+        sudokuModel.GetCellFromID(cellID).CellValue = newValue;
     }
 }

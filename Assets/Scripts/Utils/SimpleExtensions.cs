@@ -15,7 +15,7 @@ public static class SimpleExtensions
     {
         if(list != null)
         {
-            if (list.Count != list.Distinct().Count())
+            if (list.Where(x => x != 0).Count() != list.Where(x => x != 0).Distinct().Count())
             {
                 //Debug.Log("there are duplicates");
                 return true;
