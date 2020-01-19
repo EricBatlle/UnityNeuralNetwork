@@ -6,84 +6,119 @@ using UnityEngine;
 [Serializable]
 public class Sudoku
 {
-    #region Grid and Cell Structs
+    #region Sudoku Components (Row,Column,Grid,Cell) Classes
     [Serializable]
-    public struct Row
+    public class Row
     {
         public List<int> rowNumbers;
-        public bool isAnyValueRepeated;        
+        public List<int> rowCellIDs;
+        [SerializeField] private bool isAnyValueRepeated;
+        public bool IsAnyValueRepeated
+        {
+            get => rowNumbers.ThereAreRepeatedValuesOnList();
+            set => isAnyValueRepeated = value;
+        }        
     }
     [Serializable]
-    public struct Column
+    public class Column
     {
         public List<int> columnNumbers;        
+        public List<int> columnCellIDs;
         [SerializeField] private bool isAnyValueRepeated;        
         public bool IsAnyValueRepeated
         {
-            get => ThereAreRepeatedValues();
+            get => columnNumbers.ThereAreRepeatedValuesOnList();
             set => isAnyValueRepeated = value;
-        }
-
-        private bool ThereAreRepeatedValues()
-        {
-            if (columnNumbers.Count != columnNumbers.Distinct().Count())
-            {
-                Debug.Log("there are duplicates");
-                return true;
-            }
-            else
-            {
-                Debug.Log("all diferents");
-                return false;
-            }
-        }
+        }        
     }
     [Serializable]
-    public struct SquareGrid
+    public class SquareGrid
     {
         public int id;
         public List<int> contentNumbers;
-        public bool isAnyValueRepeated;        
+        public List<int> gridCellIDs;
+        [SerializeField] private bool isAnyValueRepeated;
+        public bool IsAnyValueRepeated
+        {
+            get => contentNumbers.ThereAreRepeatedValuesOnList();
+            set => isAnyValueRepeated = value;
+        }
     }
     [Serializable]
-    public struct SudokuCellStruct
+    public class SudokuCellModel
     {
         public int id;
-        [Range(0, 9)] public int value;
-        public Row belongingRow;
-        public Column belongingColumn;
-        public SquareGrid belongingGrid;
+        [SerializeField][Range(0, 9)] private int cellValue;
+        public int CellValue
+        {
+            get => cellValue;
+            set
+            {
+                cellValue = value;
+                UpdateAssociatedFields(id, cellValue);
+            }
+        }
+        public Row belongingRow = new Row();
+        public Column belongingColumn = new Column();
+        public SquareGrid belongingGrid = new SquareGrid();
+
+        private void UpdateAssociatedFields(int cellID, int newValue)
+        {            
+            if (belongingRow.rowNumbers != null)
+                if(belongingRow.rowCellIDs.FindIndex(x => x == cellID) != -1)                
+                    belongingRow.rowNumbers[belongingRow.rowCellIDs.FindIndex(x => x == cellID)] = newValue;                    
+
+            if (belongingColumn.columnNumbers != null)
+                if(belongingColumn.columnCellIDs.FindIndex(x => x == cellID) != -1)
+                    belongingColumn.columnNumbers[belongingColumn.columnCellIDs.FindIndex(x => x == cellID)] = newValue;
+
+            if (belongingGrid.contentNumbers != null)            
+                if(belongingGrid.gridCellIDs.FindIndex(x => x == cellID) != -1)
+                    belongingGrid.contentNumbers[belongingGrid.gridCellIDs.FindIndex(x => x == cellID)] = newValue;
+
+            CheckRepeatedValues();
+        }
+
+        public void CheckRepeatedValues()
+        {
+            belongingRow.IsAnyValueRepeated = belongingRow.IsAnyValueRepeated;
+            belongingColumn.IsAnyValueRepeated = belongingColumn.IsAnyValueRepeated;
+        }
     }
     #endregion
 
     [SerializeField] public int cellsInSquare = 4;
     [SerializeField] [DisplayWithoutEdit] public int cellsInSquareSide = 2;
     [SerializeField] public int[] allSudokuNumbers = new int[16];
-    [SerializeField] public SudokuCellStruct[] allSudokuCells = new SudokuCellStruct[16];
+    [SerializeField] public SudokuCellModel[] allSudokuCells = new SudokuCellModel[16];
     [SerializeField] public List<Row> rows = new List<Row>();
     [SerializeField] public List<Column> columns = new List<Column>();
-    [SerializeField] public List<SquareGrid> grids = new List<SquareGrid>();
-    
+    [SerializeField] public List<SquareGrid> grids = new List<SquareGrid>();    
+
     public Sudoku(int cellsInSquare)
     {
         this.cellsInSquare = cellsInSquare;
         InitializeGridsAndCellsStructs();
+        SetRepeatedValues();
     }
-
-    private void FindRepeatedValues()
+    
+    private void SetRepeatedValues()
     {
-        foreach(Column column in columns)
+        foreach (SudokuCellModel cell in allSudokuCells)
         {
-            if (column.columnNumbers.Any(o => o != column.columnNumbers[0]))
-            {
-                Debug.Log("all equals");
-            }
-            else
-            {
-                Debug.Log("all diferents");
-            }
-
+            cell.CheckRepeatedValues();
         }
+    }
+    
+    public SudokuCellModel GetCellFromID(int cellID)
+    {
+        for (int i = 0; i < allSudokuCells.Length; i++)
+        {
+            if (allSudokuCells[i].id == cellID)
+                return allSudokuCells[i];
+        }
+        Debug.Log("<b>ERROR</b>: This ID do not belong to any cell");
+        return new SudokuCellModel();
     }
 
     private void InitializeGridsAndCellsStructs()
@@ -91,7 +126,7 @@ public class Sudoku
         cellsInSquareSide = (int)Mathf.Sqrt(cellsInSquare);
 
         allSudokuNumbers = new int[cellsInSquare * cellsInSquare];
-        allSudokuCells = new SudokuCellStruct[cellsInSquare * cellsInSquare];
+        allSudokuCells = new SudokuCellModel[cellsInSquare * cellsInSquare];
 
         rows.Clear();
         columns.Clear();
@@ -100,14 +135,16 @@ public class Sudoku
         //Generate all numbers
         for (int i = 0; i < allSudokuNumbers.Length; i++)
         {
-            allSudokuNumbers[i] = i;
+            allSudokuNumbers[i] = UnityEngine.Random.Range(0, 9);
+            //allSudokuNumbers[i] = i;
 
-            SudokuCellStruct sudokuCell = new SudokuCellStruct();
+            SudokuCellModel sudokuCell = new SudokuCellModel();
             sudokuCell.belongingRow = new Row();
             sudokuCell.belongingColumn = new Column();
             sudokuCell.belongingGrid = new SquareGrid();
             sudokuCell.belongingGrid.contentNumbers = new List<int>();
-            sudokuCell.value = i;
+            sudokuCell.belongingGrid.gridCellIDs = new List<int>();
+            sudokuCell.CellValue = allSudokuNumbers[i];
             sudokuCell.id = i;
             allSudokuCells[i] = sudokuCell;
         }
@@ -117,9 +154,11 @@ public class Sudoku
         {
             Row row = new Row();
             row.rowNumbers = new List<int>();
+            row.rowCellIDs = new List<int>();
             for (int i = 0; i < allSudokuNumbers.Length / cellsInSquare; i++)
             {
                 row.rowNumbers.Add(allSudokuNumbers[i + u]);
+                row.rowCellIDs.Add(allSudokuCells[i + u].id);
             }
             allSudokuCells[u].belongingRow = row;
             rows.Add(row);
@@ -130,11 +169,15 @@ public class Sudoku
         {
             Column column = new Column();
             column.columnNumbers = new List<int>();
+            column.columnCellIDs = new List<int>();
             for (int i = 0; i < allSudokuNumbers.Length; i++)
             {
                 //every cellsInSquare
                 if (i % cellsInSquare == 0)
+                {
                     column.columnNumbers.Add(allSudokuNumbers[i + u]);
+                    column.columnCellIDs.Add(allSudokuCells[i + u].id);
+                }
             }
             columns.Add(column);
             allSudokuCells[u].belongingColumn = column;
@@ -148,13 +191,16 @@ public class Sudoku
                 SquareGrid squareGrid = new SquareGrid();
                 squareGrid.id = (m + t * cellsInSquareSide);
                 squareGrid.contentNumbers = new List<int>();
+                squareGrid.gridCellIDs = new List<int>();
                 for (int i = 0; i < cellsInSquareSide; i++)
                 {
                     for (int u = 0; u < cellsInSquareSide; u++)
                     {
                         squareGrid.contentNumbers.Add(allSudokuNumbers[((i) * cellsInSquare) + (u + (m * cellsInSquareSide * cellsInSquare)) + (t * cellsInSquareSide)]);
+                        squareGrid.gridCellIDs.Add(allSudokuCells[((i) * cellsInSquare) + (u + (m * cellsInSquareSide * cellsInSquare)) + (t * cellsInSquareSide)].id);
 
                         allSudokuCells[((i) * cellsInSquare) + (u + (m * cellsInSquareSide * cellsInSquare)) + (t * cellsInSquareSide)].belongingGrid.contentNumbers = squareGrid.contentNumbers;
+                        allSudokuCells[((i) * cellsInSquare) + (u + (m * cellsInSquareSide * cellsInSquare)) + (t * cellsInSquareSide)].belongingGrid.gridCellIDs = squareGrid.gridCellIDs;
                         allSudokuCells[((i) * cellsInSquare) + (u + (m * cellsInSquareSide * cellsInSquare)) + (t * cellsInSquareSide)].belongingGrid.id = squareGrid.id;
                     }
                 }

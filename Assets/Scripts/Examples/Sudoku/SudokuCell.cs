@@ -4,8 +4,8 @@ using static Sudoku;
 
 public class SudokuCell : MonoBehaviour
 {
-    private SudokuCellStruct _model;
-    public SudokuCellStruct Model
+    [SerializeField] private SudokuCellModel _model;
+    public SudokuCellModel Model
     {
         get => _model;
         set
@@ -17,13 +17,13 @@ public class SudokuCell : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Text textComponent = null;
 
-    private SudokuCell(SudokuCellStruct modelStruct)
+    private SudokuCell(SudokuCellModel modelStruct)
     {
         _model = modelStruct;
     }
 
     private void SetText()
     {
-        this.textComponent.text = _model.value.ToString();
+        this.textComponent.text = _model.CellValue.ToString();
     }
 }
