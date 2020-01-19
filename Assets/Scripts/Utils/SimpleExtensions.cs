@@ -11,18 +11,22 @@ using static Sudoku;
 public static class SimpleExtensions
 {
     #region Lists
-    public static bool ThereAreRepeatedValuesOnCellList(this List<SudokuCellStruct> list)
+    public static bool ThereAreRepeatedValuesOnList(this List<int> list)
     {
-        if (list.Count != list.Select(cell => cell.CellValue).Distinct().Count())
+        if(list != null)
         {
-            Debug.Log("there are duplicates");
-            return true;
+            if (list.Count != list.Distinct().Count())
+            {
+                //Debug.Log("there are duplicates");
+                return true;
+            }
+            else
+            {
+                //Debug.Log("all diferents");
+                return false;
+            }
         }
-        else
-        {
-            Debug.Log("all diferents");
-            return false;
-        }
+        return false;
     }
     #endregion
 
