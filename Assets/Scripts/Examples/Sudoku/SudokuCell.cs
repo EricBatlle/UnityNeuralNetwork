@@ -22,7 +22,7 @@ public class SudokuCell : MonoBehaviour
         _model = modelStruct;
     }
 
-    private void SetText()
+    public void SetText()
     {
         this.textComponent.text = _model.CellValue.ToString();
     }

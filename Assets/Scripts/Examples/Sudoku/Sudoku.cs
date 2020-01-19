@@ -48,6 +48,7 @@ public class Sudoku
     public class SudokuCellModel
     {
         public int id;
+        public SudokuCell cellComponent = null;
         [SerializeField][Range(0, 9)] private int cellValue;
         public int CellValue
         {
@@ -56,6 +57,7 @@ public class Sudoku
             {
                 cellValue = value;
                 UpdateAssociatedFields(id, cellValue);
+                cellComponent?.SetText();
             }
         }
         public Row belongingRow = new Row();

@@ -48,7 +48,8 @@ public class SudokuGenerator : MonoBehaviour
                 {
                     GameObject newCell = Instantiate(sudokuCell_prefab);
                     newCell.transform.SetParent(newGrid.transform);
-                    newCell.GetComponent<SudokuCell>().Model = newSudoku.allSudokuCells[t];
+                    newSudoku.allSudokuCells[t].cellComponent = newCell.GetComponent<SudokuCell>();
+                    newCell.GetComponent<SudokuCell>().Model = newSudoku.allSudokuCells[t];                    
                 }
             }
         }
