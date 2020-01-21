@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static SudokuGenerator;
+using static Sudoku;
 
 public class SudokuCell : MonoBehaviour
 {
