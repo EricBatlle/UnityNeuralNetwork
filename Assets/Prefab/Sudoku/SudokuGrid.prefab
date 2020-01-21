@@ -91,3 +91,5 @@ MonoBehaviour:
   model:
     id: 0
     contentNumbers: 
+    gridCellIDs: 
+    isAnyValueRepeated: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -19,7 +20,7 @@ public class SudokuGenerator : MonoBehaviour
     {
         ClearSudokuContainer();
 
-        GameObject containerGO = Instantiate(sudokuContainer_prefab);
+        GameObject containerGO = (GameObject)PrefabUtility.InstantiatePrefab(sudokuContainer_prefab);
         containerGO.transform.SetParent(canvasGO.transform, false);
 
         Sudoku newSudoku = new Sudoku(cellsInSquare);
@@ -37,7 +38,7 @@ public class SudokuGenerator : MonoBehaviour
         //Create grids
         for (int i = 0; i < newSudoku.grids.Count; i++)
         {
-            GameObject newGrid = Instantiate(sudokuGrid_prefab);
+            GameObject newGrid = (GameObject)PrefabUtility.InstantiatePrefab(sudokuGrid_prefab);
             newGrid.GetComponent<SudokuGrid>().model = newSudoku.grids[i];
             newGrid.transform.SetParent(containerGO.transform);
             //foreach grid create his cells            
@@ -46,7 +47,7 @@ public class SudokuGenerator : MonoBehaviour
                 //Find the belonging cell of the grid
                 if(newSudoku.grids[i].id == newSudoku.allSudokuCells[t].belongingGrid.id)
                 {
-                    GameObject newCell = Instantiate(sudokuCell_prefab);
+                    GameObject newCell = (GameObject)PrefabUtility.InstantiatePrefab(sudokuCell_prefab);
                     newCell.transform.SetParent(newGrid.transform);
                     newSudoku.allSudokuCells[t].cellComponent = newCell.GetComponent<SudokuCell>();
                     newCell.GetComponent<SudokuCell>().Model = newSudoku.allSudokuCells[t];                    

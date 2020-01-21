@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 1708350649614168221}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 959.49097}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.95, y: 0.9, z: 0.95}
   m_Children: []
   m_Father: {fileID: 2753147428588210197}
   m_RootOrder: 0
@@ -122,6 +122,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d61940f8a93ea04db96e307e7a23234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _model:
+    id: 0
+    cellComponent: {fileID: 0}
+    cellValue: 0
+    belongingRow:
+      rowNumbers: 
+      rowCellIDs: 
+      isAnyValueRepeated: 0
+    belongingColumn:
+      columnNumbers: 
+      columnCellIDs: 
+      isAnyValueRepeated: 0
+    belongingGrid:
+      id: 0
+      contentNumbers: 
+      gridCellIDs: 
+      isAnyValueRepeated: 0
   textComponent: {fileID: 1923342497166176622}
 --- !u!1 &7510031297701770082
 GameObject:
