@@ -24,7 +24,8 @@ public class SudokuGenerator : MonoBehaviour
 
         GameObject containerGO = (GameObject)PrefabUtility.InstantiatePrefab(sudokuContainer_prefab);
         containerGO.transform.SetParent(canvasGO.transform, false);
-
+        
+        //ToDo: Control that the numbers from newSudokuSequence are < squareCells
         Sudoku newSudoku = new Sudoku(cellsInSquare, newSudokuSequence, isRandomlyGenerated);
         containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;        
 

@@ -140,6 +140,7 @@ MonoBehaviour:
       gridCellIDs: 
       isAnyValueRepeated: 0
   textComponent: {fileID: 1923342497166176622}
+  rawImgComponent: {fileID: 7212937870308454773}
 --- !u!1 &7510031297701770082
 GameObject:
   m_ObjectHideFlags: 0

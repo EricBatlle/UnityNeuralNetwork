@@ -44,12 +44,14 @@ public class Sudoku
             set => isAnyValueRepeated = value;
         }
     }
+    public enum CellState { Valid, Invalid, Empty };
     //ToDO:Split those classes on to other scripts
     [Serializable]
     public class SudokuCellModel
-    {
+    {        
         public int id;
         public SudokuCell cellComponent = null;
+        public CellState cellState = CellState.Invalid;
         [SerializeField] private int cellValue;
         public int CellValue
         {
@@ -86,6 +88,19 @@ public class Sudoku
         {
             belongingRow.IsAnyValueRepeated = belongingRow.IsAnyValueRepeated;
             belongingColumn.IsAnyValueRepeated = belongingColumn.IsAnyValueRepeated;
+            belongingGrid.IsAnyValueRepeated = belongingGrid.IsAnyValueRepeated;
+
+            CheckCellState();
+        }
+
+        private void CheckCellState()
+        {            
+            if (CellValue == 0)            
+                cellState = CellState.Empty;
+            else if (belongingColumn.IsAnyValueRepeated || belongingGrid.IsAnyValueRepeated || belongingRow.IsAnyValueRepeated)
+                cellState = CellState.Invalid;
+            else
+                cellState = CellState.Valid;
         }
     }
     #endregion
@@ -165,7 +180,7 @@ public class Sudoku
             sudokuCell.belongingGrid = new SquareGrid();
             sudokuCell.belongingGrid.contentNumbers = new List<int>();
             sudokuCell.belongingGrid.gridCellIDs = new List<int>();
-            sudokuCell.CellValue = allSudokuNumbers[i];
+           sudokuCell.CellValue = allSudokuNumbers[i]; 
             sudokuCell.id = i;
             allSudokuCells[i] = sudokuCell;
         }
