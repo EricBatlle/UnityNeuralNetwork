@@ -8,6 +8,8 @@ public class SudokuGenerator : MonoBehaviour
 {
     [Header("Sudoku Design Info")]
     [SerializeField] private int cellsInSquare = 4;
+    [SerializeField] private int[] newSudokuSequence = null;
+    [SerializeField] private bool isRandomlyGenerated = false;
     [Header("UI References")]    
     [SerializeField] private GameObject canvasGO = null;
     [Header("Prefabs")]
@@ -23,17 +25,17 @@ public class SudokuGenerator : MonoBehaviour
         GameObject containerGO = (GameObject)PrefabUtility.InstantiatePrefab(sudokuContainer_prefab);
         containerGO.transform.SetParent(canvasGO.transform, false);
 
-        Sudoku newSudoku = new Sudoku(cellsInSquare);
+        Sudoku newSudoku = new Sudoku(cellsInSquare, newSudokuSequence, isRandomlyGenerated);
         containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;        
 
         //Change Container layout parameters
         FlexibleGridLayoutGroup containerLayout = containerGO.GetComponent<FlexibleGridLayoutGroup>();
         containerLayout.rows = newSudoku.cellsInSquareSide;
-        containerLayout.cols = containerLayout.rows; //cause it's an square        
+        containerLayout.cols = newSudoku.cellsInSquareSide; //cause it's an square        
         //Change Grid prefab layout parameters
         FlexibleGridLayoutGroup gridPrefabLayout = sudokuGrid_prefab.GetComponent<FlexibleGridLayoutGroup>();
         gridPrefabLayout.rows = newSudoku.cellsInSquareSide;
-        gridPrefabLayout.cols = containerLayout.rows; //cause it's an square
+        gridPrefabLayout.cols = newSudoku.cellsInSquareSide; //cause it's an square
 
         //Create grids
         for (int i = 0; i < newSudoku.grids.Count; i++)

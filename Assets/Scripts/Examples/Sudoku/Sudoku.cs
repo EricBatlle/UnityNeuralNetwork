@@ -44,20 +44,21 @@ public class Sudoku
             set => isAnyValueRepeated = value;
         }
     }
+    //ToDO:Split those classes on to other scripts
     [Serializable]
     public class SudokuCellModel
     {
         public int id;
         public SudokuCell cellComponent = null;
-        [SerializeField][Range(0, 9)] private int cellValue;
+        [SerializeField] private int cellValue;
         public int CellValue
         {
             get => cellValue;
             set
-            {
+            {                
                 cellValue = value;
                 UpdateAssociatedFields(id, cellValue);
-                cellComponent?.SetText();
+                cellComponent?.UpdateUI();                
             }
         }
         public Row belongingRow = new Row();
@@ -95,11 +96,23 @@ public class Sudoku
     [SerializeField] public SudokuCellModel[] allSudokuCells = new SudokuCellModel[16];
     [SerializeField] public List<Row> rows = new List<Row>();
     [SerializeField] public List<Column> columns = new List<Column>();
-    [SerializeField] public List<SquareGrid> grids = new List<SquareGrid>();    
+    [SerializeField] public List<SquareGrid> grids = new List<SquareGrid>();
+    [Header("Generation Settings")]
+    [SerializeField] public int[] newSudokuSequence = null;
+    [SerializeField] public bool isRandomlyGenerated = false;
 
     public Sudoku(int cellsInSquare)
     {
         this.cellsInSquare = cellsInSquare;
+        InitializeGridsAndCellsStructs();
+        SetRepeatedValues();
+    }
+    public Sudoku(int cellsInSquare = 4, int[] newSudokuSequence = null, bool isRandomlyGenerated = false)
+    {
+        this.cellsInSquare = cellsInSquare;
+        this.newSudokuSequence = newSudokuSequence;
+        this.isRandomlyGenerated = isRandomlyGenerated;
+
         InitializeGridsAndCellsStructs();
         SetRepeatedValues();
     }
@@ -137,9 +150,15 @@ public class Sudoku
         //Generate all numbers
         for (int i = 0; i < allSudokuNumbers.Length; i++)
         {
-            allSudokuNumbers[i] = UnityEngine.Random.Range(0, 9);
-            //allSudokuNumbers[i] = i;
-
+            if (newSudokuSequence.Length == allSudokuNumbers.Length)
+                allSudokuNumbers[i] = newSudokuSequence[i];
+            else
+            {
+                if(isRandomlyGenerated)
+                    allSudokuNumbers[i] = UnityEngine.Random.Range(0, cellsInSquare);
+                else
+                    allSudokuNumbers[i] = i;
+            }
             SudokuCellModel sudokuCell = new SudokuCellModel();
             sudokuCell.belongingRow = new Row();
             sudokuCell.belongingColumn = new Column();
@@ -162,7 +181,10 @@ public class Sudoku
                 row.rowNumbers.Add(allSudokuNumbers[i + u]);
                 row.rowCellIDs.Add(allSudokuCells[i + u].id);
             }
-            allSudokuCells[u].belongingRow = row;
+            foreach (int rowCellId in row.rowCellIDs)
+            {
+                GetCellFromID(rowCellId).belongingRow = row;                
+            }
             rows.Add(row);
         }
 
@@ -181,8 +203,11 @@ public class Sudoku
                     column.columnCellIDs.Add(allSudokuCells[i + u].id);
                 }
             }
+            foreach(int columnCellId in column.columnCellIDs)
+            {
+                GetCellFromID(columnCellId).belongingColumn = column;
+            }
             columns.Add(column);
-            allSudokuCells[u].belongingColumn = column;
         }
 
         //Generate GridsOfcellsInSquare
