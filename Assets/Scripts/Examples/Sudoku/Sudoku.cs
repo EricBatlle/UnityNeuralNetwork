@@ -51,7 +51,8 @@ public class Sudoku
     {        
         public int id;
         public SudokuCell cellComponent = null;
-        public CellState cellState = CellState.Invalid;
+        public CellState cellState = CellState.Empty;
+        public bool isOriginalCell = true;
         [SerializeField] private int cellValue;
         public int CellValue
         {
@@ -94,9 +95,9 @@ public class Sudoku
         }
 
         private void CheckCellState()
-        {            
+        {                        
             if (CellValue == 0)            
-                cellState = CellState.Empty;
+                cellState = CellState.Empty;            
             else if (belongingColumn.IsAnyValueRepeated || belongingGrid.IsAnyValueRepeated || belongingRow.IsAnyValueRepeated)
                 cellState = CellState.Invalid;
             else
@@ -175,13 +176,17 @@ public class Sudoku
                     allSudokuNumbers[i] = i;
             }
             SudokuCellModel sudokuCell = new SudokuCellModel();
+            sudokuCell.id = i;
             sudokuCell.belongingRow = new Row();
             sudokuCell.belongingColumn = new Column();
             sudokuCell.belongingGrid = new SquareGrid();
             sudokuCell.belongingGrid.contentNumbers = new List<int>();
             sudokuCell.belongingGrid.gridCellIDs = new List<int>();
-           sudokuCell.CellValue = allSudokuNumbers[i]; 
-            sudokuCell.id = i;
+            sudokuCell.CellValue = allSudokuNumbers[i];
+
+            if (sudokuCell.CellValue == 0)
+                sudokuCell.isOriginalCell = false;
+
             allSudokuCells[i] = sudokuCell;
         }
 

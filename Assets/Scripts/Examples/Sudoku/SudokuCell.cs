@@ -34,20 +34,26 @@ public class SudokuCell : MonoBehaviour
     }
     private void SetColor()
     {
-        switch(Model.cellState)
+        if(Model.isOriginalCell)
+            rawImgComponent.color = SudokuGenerator.s_Instance.color_OriginalCell;
+        else
         {
-            case CellState.Invalid:
-                rawImgComponent.color = Color.red;
-            break;
-            case CellState.Valid:
-                rawImgComponent.color = Color.green;
+            switch (Model.cellState)
+            {
+                case CellState.Invalid:
+                    rawImgComponent.color = SudokuGenerator.s_Instance.color_Invalid;
                 break;
-            case CellState.Empty:
-                rawImgComponent.color = Color.yellow;
-                break;
-            default:
-                Debug.Log("<b>ERROR:</b> There is no cellState associated");
-                break;
-        }         
+                case CellState.Valid:
+                    rawImgComponent.color = SudokuGenerator.s_Instance.color_Valid;
+                    break;
+                case CellState.Empty:
+                    rawImgComponent.color = SudokuGenerator.s_Instance.color_Empty;
+                    break;
+                default:
+                    Debug.Log("<b>ERROR:</b> There is no cellState associated");
+                    break;
+            }         
+
+        }
     }
 }

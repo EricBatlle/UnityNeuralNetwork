@@ -10,7 +10,7 @@ public abstract class Agent : MonoBehaviour
     [SerializeField] public NeuralNetwork net = null;           //neural network associated to the agent
     [SerializeField] protected object[] info = null;            //global info passed to the agent to generate inputs
     [SerializeField] protected float[] inputs = new float[1];   //info introduced on the neural network to generate outputs
-    [SerializeField] protected float[] outputs = null;          //outputs calculated by agent neural network, every output can be used in a different action
+    [SerializeField] protected float[] outputs = null;          //outputs calculated by agent neural network, every output can be used in a different action. They go from from -1 to 1.
     [Header("Loaded Neural Network")]
     [SerializeField] protected TextAsset neuralNetworkToLoad = null;
 

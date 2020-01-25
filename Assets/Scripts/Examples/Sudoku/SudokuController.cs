@@ -12,9 +12,15 @@ public class SudokuController : MonoBehaviour
 
     [ContextMenu("Chang")]
     private void ChangeValue()
-    {
-        if (newValue <= sudokuModel.cellsInSquare)        
-            sudokuModel.GetCellFromID(cellID).CellValue = newValue;        
+    {        
+        if (newValue <= sudokuModel.cellsInSquare)
+        {
+            SudokuCellModel cellModelToChange = sudokuModel.GetCellFromID(cellID);
+            if (!cellModelToChange.isOriginalCell)
+                cellModelToChange.CellValue = newValue;
+            else
+                Debug.Log("<b>ERROR:</b> Can't modify original Cells");
+        }
         else        
             Debug.Log("<b>ERROR:</b> Can't set a higher number than " + sudokuModel.cellsInSquare);        
     }

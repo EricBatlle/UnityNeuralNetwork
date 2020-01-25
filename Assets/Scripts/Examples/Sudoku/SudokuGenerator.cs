@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class SudokuGenerator : MonoBehaviour
+public class SudokuGenerator : Singleton<SudokuGenerator>
 {
     [Header("Sudoku Design Info")]
     [SerializeField] private int cellsInSquare = 4;
@@ -12,6 +12,11 @@ public class SudokuGenerator : MonoBehaviour
     [SerializeField] private bool isRandomlyGenerated = false;
     [Header("UI References")]    
     [SerializeField] private GameObject canvasGO = null;
+    [Header("Cell Colors")]
+    public Color color_Invalid = Color.red;
+    public Color color_Valid = Color.green;
+    public Color color_Empty = Color.yellow;
+    public Color color_OriginalCell = Color.blue;
     [Header("Prefabs")]
     [SerializeField] private GameObject sudokuContainer_prefab = null;
     [SerializeField] private GameObject sudokuGrid_prefab = null;
