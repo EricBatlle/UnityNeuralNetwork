@@ -18,9 +18,11 @@ public class SudokuCell : MonoBehaviour
     [SerializeField] private Text textComponent = null;
     [SerializeField] private RawImage rawImgComponent = null;
 
-    private SudokuCell(SudokuCellModel modelStruct)
+    public SudokuGenerator sudokuGenerator = null;
+   
+    public void Init(SudokuCellModel modelStruct)
     {
-        _model = modelStruct;
+        Model = modelStruct;
     }
 
     public void UpdateUI()
@@ -35,19 +37,19 @@ public class SudokuCell : MonoBehaviour
     private void SetColor()
     {
         if(Model.isOriginalCell)
-            rawImgComponent.color = SudokuGenerator.s_Instance.color_OriginalCell;
+            rawImgComponent.color = sudokuGenerator.color_OriginalCell;
         else
         {
             switch (Model.cellState)
             {
                 case CellState.Invalid:
-                    rawImgComponent.color = SudokuGenerator.s_Instance.color_Invalid;
+                    rawImgComponent.color = sudokuGenerator.color_Invalid;
                 break;
                 case CellState.Valid:
-                    rawImgComponent.color = SudokuGenerator.s_Instance.color_Valid;
+                    rawImgComponent.color = sudokuGenerator.color_Valid;
                     break;
                 case CellState.Empty:
-                    rawImgComponent.color = SudokuGenerator.s_Instance.color_Empty;
+                    rawImgComponent.color = sudokuGenerator.color_Empty;
                     break;
                 default:
                     Debug.Log("<b>ERROR:</b> There is no cellState associated");
