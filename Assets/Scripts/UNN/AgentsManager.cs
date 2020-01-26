@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static NeuralNetworkSerializer;
 
@@ -12,7 +13,7 @@ public abstract class AgentsManager : MonoBehaviour
     [SerializeField] protected GameObject agentPrefab;
     [Space()]
     [SerializeField][Range(0f, 20f)]
-    protected float newTimeScale = 10f;//Increase Scale time speed all processes, increase it to train faster the agents
+    protected float newTimeScale = 10f; //Increase Scale time speed all processes, increase it to train faster the agents
     public float NewTimeScale
     {
         get { return newTimeScale; }
@@ -22,18 +23,20 @@ public abstract class AgentsManager : MonoBehaviour
     [DisplayWithoutEdit][SerializeField] protected int currentGenerationNumber = 0;
     [Space()]
     [Tooltip("Is recommended to have an even number of agents")]
-    [SerializeField] protected int populationSize = 50;             //...to speed training cause training use the half of the population(population/2)
-    [SerializeField] protected int[] layers = new int[] { 1, 10, 10, 1 }; //1 input and 1 output
+    [SerializeField] protected int populationSize = 50;                     //...to speed training cause training use the half of the population(population/2)
+    [SerializeField] protected int[] layers = new int[] { 1, 10, 10, 1 };   //1 input and 1 output
     [Header("Neural Network to Load")]
     public TextAsset neuralNetworkToLoad = null;
     public bool createNetxGenerationWithThisNet = false;
 
     protected List<NeuralNetwork> agentsNets = null;
     protected List<Agent> agentsList = null;        
-    protected GameObject agentsParentGO;                //Used as agents parent on Unity's hierarchy
-    [HideInInspector] public bool isTraining = false;   //True when the training process is on
-    [HideInInspector] public bool isTrainingStoped = false;   //True when the training process is on
+    protected GameObject agentsParentGO;                    //Used as agents parent on Unity's hierarchy
+    [HideInInspector] public bool isTraining = false;       //True when the training process is on
+    [HideInInspector] public bool isTrainingStoped = false; //True when the training process is on
     private Coroutine trainingCoroutine = null;
+
+    public Action OnStartTrainAgents = null;
 
     /// <summary>
     /// This is needed cause properties aren't called by UnityEditor changes
@@ -41,6 +44,15 @@ public abstract class AgentsManager : MonoBehaviour
     private void OnValidate()
     {
         NewTimeScale = NewTimeScale;
+    }
+
+    /// <summary>
+    /// Setter for Manager layers, to allow more ways of setting it, not only Editor
+    /// </summary>
+    /// <param name="newLayers"></param>
+    protected virtual int[] SetLayers()
+    {
+        return this.layers;
     }
 
     /// <summary>
@@ -59,6 +71,8 @@ public abstract class AgentsManager : MonoBehaviour
     {
         isTraining = true;
         isTrainingStoped = false;
+
+        this.layers = SetLayers();
 
         CreateAgentsParentGO();
         trainingCoroutine = this.InvokeRepeatingAndGetCoroutine(TrainAgents, newGenerationRateTime);
@@ -97,6 +111,7 @@ public abstract class AgentsManager : MonoBehaviour
     /// </summary>
     private void TrainAgents ()
     {
+        OnStartTrainAgents?.Invoke();
         //It it is the first generation, instantiate all neural networks
         if (currentGenerationNumber == 0)
         {
