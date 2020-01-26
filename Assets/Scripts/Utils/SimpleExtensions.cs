@@ -10,6 +10,14 @@ using static Sudoku;
 /// </summary>
 public static class SimpleExtensions
 {
+    public static int ConvertToIntegerOnRange(this float oldValue, float oldMaxRange, float oldMinRange, float newMaxRange, float newMinRange)
+    {
+        float oldRange = (oldMaxRange - oldMinRange);
+        float newRange = (newMaxRange - newMinRange);
+        float newValue = (((oldValue - oldMinRange) * newRange) / oldRange) + newMinRange;
+        return Mathf.RoundToInt(newValue);
+    }
+
     #region Lists
     public static bool ThereAreRepeatedValuesOnList(this List<int> list)
     {
