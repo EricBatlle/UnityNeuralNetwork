@@ -163,7 +163,7 @@ MonoBehaviour:
     type: 3}
   sudokuCell_prefab: {fileID: 1894430010195582696, guid: e32a0ba23c2432f4a8525b828d16f855,
     type: 3}
-  temporalSudokuController: {fileID: 0}
+  sudokuCount: 0
 --- !u!4 &263042110
 Transform:
   m_ObjectHideFlags: 0
@@ -274,12 +274,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trainOnStart: 1
-  agentPrefab: {fileID: 0}
-  newTimeScale: 1
-  newGenerationRateTime: 15
+  agentPrefab: {fileID: 6057974632836226668, guid: 600611e33bfce2c419d6693b5181c1b2,
+    type: 3}
+  newTimeScale: 10
+  newGenerationRateTime: 5
   currentGenerationNumber: 0
-  populationSize: 1
-  layers: 100000000a0000000a00000002000000
+  populationSize: 40
+  layers: 120000000a0000000a00000002000000
   neuralNetworkToLoad: {fileID: 0}
   createNetxGenerationWithThisNet: 0
   isTraining: 0
@@ -541,7 +542,7 @@ Canvas:
   m_GameObject: {fileID: 1929795703}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 1059852618}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
