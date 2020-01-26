@@ -4,10 +4,10 @@ using UnityEditor;
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class SudokuGenerator : Singleton<SudokuGenerator>
+public class SudokuGenerator : MonoBehaviour
 {
     [Header("Sudoku Design Info")]
-    [SerializeField] private int cellsInSquare = 4;
+    public int cellsInSquare = 4;
     [SerializeField] private int[] newSudokuSequence = null;
     [SerializeField] private bool isRandomlyGenerated = false;
     [Header("UI References")]    
@@ -22,8 +22,10 @@ public class SudokuGenerator : Singleton<SudokuGenerator>
     [SerializeField] private GameObject sudokuGrid_prefab = null;
     [SerializeField] private GameObject sudokuCell_prefab = null;
 
+    public int sudokuCount = 0;    
+
     [ContextMenu("Generate Sudoku")]
-    private void GenerateSudoku()
+    public void GenerateSudoku()
     {
         ClearSudokuContainer();
 
@@ -32,7 +34,7 @@ public class SudokuGenerator : Singleton<SudokuGenerator>
         
         //ToDo: Control that the numbers from newSudokuSequence are < squareCells
         Sudoku newSudoku = new Sudoku(cellsInSquare, newSudokuSequence, isRandomlyGenerated);
-        containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;        
+        containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;
 
         //Change Container layout parameters
         FlexibleGridLayoutGroup containerLayout = containerGO.GetComponent<FlexibleGridLayoutGroup>();
@@ -58,10 +60,58 @@ public class SudokuGenerator : Singleton<SudokuGenerator>
                     GameObject newCell = (GameObject)PrefabUtility.InstantiatePrefab(sudokuCell_prefab);
                     newCell.transform.SetParent(newGrid.transform);
                     newSudoku.allSudokuCells[t].cellComponent = newCell.GetComponent<SudokuCell>();
-                    newCell.GetComponent<SudokuCell>().Model = newSudoku.allSudokuCells[t];                    
+                    newCell.GetComponent<SudokuCell>().sudokuGenerator = this;
+                    newCell.GetComponent<SudokuCell>().Model = newSudoku.allSudokuCells[t];
                 }
             }
         }
+    }
+    public SudokuController GenerateSudokuAndGetController()
+    {
+        //ClearSudokuContainer();
+        GameObject containerGO = (GameObject)PrefabUtility.InstantiatePrefab(sudokuContainer_prefab);
+        containerGO.transform.SetParent(canvasGO.transform, false);
+        Vector3 newContainerPosition = containerGO.GetComponent<RectTransform>().position;
+        newContainerPosition.x = newContainerPosition.x + ((1920 + 50)*sudokuCount);
+        containerGO.GetComponent<RectTransform>().position = newContainerPosition;
+        sudokuCount++;
+        
+        //ToDo: Control that the numbers from newSudokuSequence are < squareCells
+        Sudoku newSudoku = new Sudoku(cellsInSquare, newSudokuSequence, isRandomlyGenerated);
+        containerGO.GetComponent<SudokuController>().sudokuModel = newSudoku;
+        containerGO.GetComponent<SudokuController>().sudokuContainer = containerGO;
+
+        //Change Container layout parameters
+        FlexibleGridLayoutGroup containerLayout = containerGO.GetComponent<FlexibleGridLayoutGroup>();
+        containerLayout.rows = newSudoku.cellsInSquareSide;
+        containerLayout.cols = newSudoku.cellsInSquareSide; //cause it's an square        
+        //Change Grid prefab layout parameters
+        FlexibleGridLayoutGroup gridPrefabLayout = sudokuGrid_prefab.GetComponent<FlexibleGridLayoutGroup>();
+        gridPrefabLayout.rows = newSudoku.cellsInSquareSide;
+        gridPrefabLayout.cols = newSudoku.cellsInSquareSide; //cause it's an square
+
+        //Create grids
+        for (int i = 0; i < newSudoku.grids.Count; i++)
+        {
+            GameObject newGrid = (GameObject)PrefabUtility.InstantiatePrefab(sudokuGrid_prefab);
+            newGrid.GetComponent<SudokuGrid>().model = newSudoku.grids[i];
+            newGrid.transform.SetParent(containerGO.transform);
+            //foreach grid create his cells            
+            for (int t = 0; t < newSudoku.allSudokuCells.Length; t++)
+            {
+                //Find the belonging cell of the grid
+                if(newSudoku.grids[i].id == newSudoku.allSudokuCells[t].belongingGrid.id)
+                {
+                    GameObject newCell = (GameObject)PrefabUtility.InstantiatePrefab(sudokuCell_prefab);
+                    newCell.transform.SetParent(newGrid.transform);
+                    newSudoku.allSudokuCells[t].cellComponent = newCell.GetComponent<SudokuCell>();
+                    newCell.GetComponent<SudokuCell>().sudokuGenerator = this;
+                    newCell.GetComponent<SudokuCell>().Model = newSudoku.allSudokuCells[t];
+                }
+            }
+        }
+
+        return containerGO.GetComponent<SudokuController>();
     }
 
     [ContextMenu("Clear SudokuContainer")]
