@@ -123,14 +123,16 @@ public abstract class AgentsManager : MonoBehaviour
             //Ascending Sort (lower fitness on the first positions)
             agentsNets.Sort();
                 
-            for (int i = 0; i < populationSize / 2; i++)
+            for (int i = 0; i < (populationSize / 2); i++)
             {
-                //For the first half of the population (the dumbest), mutate their neural network
-                agentsNets[i] = new NeuralNetwork(agentsNets[i+(populationSize / 2)]);
+                //For the first half of the population (the dumbest):
+                //1. Assign them the best half of the neural networks
+                agentsNets[i] = new NeuralNetwork(agentsNets[i + (populationSize / 2)]);
+                //2. Mutate their neural network
                 agentsNets[i].Mutate();
 
                 //too lazy to write a reset neuron matrix for the second half of the population (the smartest) values method....so just going to make a deepcopy
-                agentsNets[i + (populationSize / 2)] = new NeuralNetwork(agentsNets[i + (populationSize / 2)]); 
+                agentsNets[i + (populationSize / 2)] = new NeuralNetwork(agentsNets[i + (populationSize / 2)]);
             }
 
             //Reset all fitness values

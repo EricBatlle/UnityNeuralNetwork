@@ -13,6 +13,8 @@ public class SudokuAgent : Agent
     [SerializeField] private int cellIdToModify = 0;
     [SerializeField] private int newCellValue = 0;
 
+    private List<SudokuCellModel> availableCellsID = new List<SudokuCellModel>();
+
     public override void Init(NeuralNetwork net, params object[] info)
     {
         base.Init(net, info);
@@ -34,7 +36,6 @@ public class SudokuAgent : Agent
         sudokuController = manager.sudokuController;
     }
 
-    private List<SudokuCellModel> availableCellsID = new List<SudokuCellModel>();
     protected override void CollectEnvironmentInformation()
     {
         //Get Sudoku information, as it is managed from sudokuController, there is no need        
@@ -42,39 +43,19 @@ public class SudokuAgent : Agent
 
     protected override void SetNewInputs()
     {
-        this.inputs = new float[sudokuController.sudokuModel.allSudokuCells.Length + 2];
+        this.inputs = new float[sudokuController.sudokuModel.allSudokuCells.Length];
         for (int i = 0; i < sudokuController.sudokuModel.allSudokuCells.Length; i++)
         {
             inputs[i] = sudokuController.sudokuModel.allSudokuCells[i].CellValue;
         }
-        inputs[sudokuController.sudokuModel.allSudokuCells.Length] = lastCellId;
-        inputs[sudokuController.sudokuModel.allSudokuCells.Length + 1] = lastCellValue;
     }
 
-    public int lastCellValue = 0;
-    public int lastCellId = 0;
-    public bool isRepeatingValue = false;
-    public bool isRepeatingID = false;
-    public bool isRepeatingCellValue = false;
-    public int repeatingValueCount = 0;
-    public int repeatingIDCount = 0;
     protected override void AgentAction()
     {
-        //cellIdToModify = outputs[0].ConvertToIntegerOnRange(1,-1,0, sudokuController.sudokuModel.allSudokuCells.Length);
         int availableCellsIDIndex = outputs[0].ConvertToIntegerOnRange(1,-1,0, availableCellsID.Count-1);
         cellIdToModify = availableCellsID[availableCellsIDIndex].id;
-        isRepeatingID = (lastCellId == cellIdToModify) ? true : false;
-        repeatingIDCount = (isRepeatingID) ? repeatingIDCount + 1 : 0;
-        lastCellId = cellIdToModify;
 
         newCellValue = outputs[1].ConvertToIntegerOnRange(1,-1,0, sudokuController.sudokuModel.cellsInSquare);
-        isRepeatingValue = (lastCellValue == newCellValue) ? true : false;        
-        repeatingValueCount = (isRepeatingValue) ? repeatingValueCount + 1 : 0;
-        lastCellValue = newCellValue;
-
-        //isSettingTheLastValueToTheSameCell
-        if (lastCellValue == availableCellsID[availableCellsIDIndex].CellValue)
-            isRepeatingCellValue = true;
 
         sudokuController.ChangeCellValue(cellIdToModify, newCellValue);
         MoveAgentToCell(cellIdToModify);        

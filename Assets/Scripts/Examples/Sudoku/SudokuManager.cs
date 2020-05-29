@@ -18,7 +18,7 @@ public class SudokuManager : AgentsManager
     #region AgentsManager
     protected override int[] SetLayers()
     {
-        return new int[] { (sudokuGenerator.cellsInSquare * sudokuGenerator.cellsInSquare) + 2, 10, 10, 2 };
+        return new int[] { (sudokuGenerator.cellsInSquare * sudokuGenerator.cellsInSquare), 10, 10, 2 };
     }
     //Override to create SimpleAgent agents
     protected override Agent CreateAgentGO(int agentNumber)

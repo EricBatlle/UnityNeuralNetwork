@@ -279,8 +279,8 @@ MonoBehaviour:
   newTimeScale: 10
   newGenerationRateTime: 5
   currentGenerationNumber: 0
-  populationSize: 40
-  layers: 120000000a0000000a00000002000000
+  populationSize: 60
+  layers: 100000000a0000000a00000002000000
   neuralNetworkToLoad: {fileID: 0}
   createNetxGenerationWithThisNet: 0
   isTraining: 0
