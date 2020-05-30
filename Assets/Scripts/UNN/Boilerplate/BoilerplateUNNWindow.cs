@@ -47,12 +47,12 @@ public class BoilerplateUNNWindow : EditorWindow
             {
                 // Try to create the directory.
                 DirectoryInfo di = Directory.CreateDirectory(path);
-                Debug.Log("The directory was created successfully");
+                Debug.Log("Directory " + path + " was created successfully");
             }
         }
         catch (Exception e)
         {
-            Debug.Log("The directory creation process failed: " + e.ToString());
+            Debug.Log("Directory creation process failed: " + e.ToString());
         }
         finally { }
     }
@@ -98,8 +98,8 @@ public class BoilerplateUNNWindow : EditorWindow
         string managerEditorCS = scenarioName + MANAGER + EDITOR + ".cs";
         CreateFile(newScenarioEditorDirectory + "/" + managerEditorCS, GenerateManagerEditorContent());
 
-
-
+        //Refresh project files to check the results
+        AssetDatabase.Refresh();
     }
 
     #region GenerateContent
