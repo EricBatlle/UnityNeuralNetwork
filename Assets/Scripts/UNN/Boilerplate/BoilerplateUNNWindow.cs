@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoilerplateUNNWindow : EditorWindow
 {
     [SerializeField] private string scenarioName = "newScenario";
-    [SerializeField] private string newScenariosDirectory = "Assets/Scripts/Examples";
+    [SerializeField] private string newScenarioDirectory = "Assets/Scripts/Examples";
+    [SerializeField] private string newScenarioSceneDirectory = "Assets/Scenes_Examples";
     [SerializeField] private static string AGENT = "Agent";
     [SerializeField] private static string MANAGER = "Manager";
     [SerializeField] private static string EDITOR = "Editor";
@@ -23,7 +24,8 @@ public class BoilerplateUNNWindow : EditorWindow
     {
         GUILayout.Label("Create fast new boilerplate scripts for new UNN scenarios", EditorStyles.boldLabel);
         scenarioName = EditorGUILayout.TextField("NewScenario Name", scenarioName);
-        newScenariosDirectory = EditorGUILayout.TextField("NewScenario Directory", newScenariosDirectory);
+        newScenarioDirectory = EditorGUILayout.TextField("NewScenario Scripts Path", newScenarioDirectory);
+        newScenarioSceneDirectory = EditorGUILayout.TextField("NewScenario Scene Path", newScenarioSceneDirectory);
 
         if (GUILayout.Button("Generate UNN Boilerplate"))
         {
@@ -82,12 +84,14 @@ public class BoilerplateUNNWindow : EditorWindow
 
     private void GenerateUNNBoilerplateElements()
     {
-        string newScenarioDirectory = newScenariosDirectory + "/" + scenarioName;
+        //Generate directories hierarchy
+        string newScenarioDirectory = this.newScenarioDirectory + "/" + scenarioName;
         string newScenarioEditorDirectory = newScenarioDirectory + "/Editor";
 
         CreateDirectory(newScenarioDirectory);
         CreateDirectory(newScenarioEditorDirectory);
 
+        //Generate scripts
         string agentCS = scenarioName + AGENT + ".cs";
         CreateFile(newScenarioDirectory + "/" + agentCS, GenerateAgentContent());
         string agentEditorCS = scenarioName + AGENT + EDITOR + ".cs";
@@ -97,6 +101,9 @@ public class BoilerplateUNNWindow : EditorWindow
         CreateFile(newScenarioDirectory + "/" + managerCS, GenerateManagerContent());
         string managerEditorCS = scenarioName + MANAGER + EDITOR + ".cs";
         CreateFile(newScenarioEditorDirectory + "/" + managerEditorCS, GenerateManagerEditorContent());
+
+        //Generate Scene 
+        GenerateScenarioScene();
 
         //Refresh project files to check the results
         AssetDatabase.Refresh();
@@ -217,6 +224,20 @@ public class "+scenarioName+@"Manager : AgentsManager
 public class " + scenarioName + @"ManagerEditor : AgentsManagerEditor
 {
 }";
+    }
+    
+    //Scene
+    private void GenerateScenarioScene()
+    {
+        //Generate Scene
+        Scene newScene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+        newScene.name = scenarioName;
+        bool saveOK = EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), newScenarioSceneDirectory + "/" + scenarioName + ".unity");
+
+        //Populate scene
+        GameObject managerGO = new GameObject("Manager_AddManagerScript");
+
+        Debug.Log("Scene creation " + (saveOK ? "OK" : "Error!"));
     }
     #endregion
     
