@@ -11,6 +11,18 @@ Builded with **C#** from scratch, avoiding complex (and black-boxed) frameworks 
   <img src="SimpleVideo.gif" alt="simple video gif"/>
 </p>
 
+## Donations are appreciated! 💸
+*Remember that are many ways to say thank you.*
+
+If this repository has been helpful remember to star it and consider buying me a coffee! 😀 
+<p>
+<a href="https://www.buymeacoffee.com/ebatlleclavero" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-blue.png" alt="Buy Me A Coffee" width="144.6" height="34"></a>
+</p>
+
+If you like my general work and contributions consider [sponsoring me on Github](https://github.com/sponsors/EricBatlle). 
+
+But if you just want to donate straightforward, I also have [PayPal.me](https://paypal.me/EricBatlleClavero?locale.x=es_ES).
+
 ## Table of Contents 
 
 - [⚙️ How to Use](#how-to-use)
